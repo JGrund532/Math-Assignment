@@ -3,8 +3,8 @@ import matplotlib
 import fractions
 import matplotlib.pyplot as plt
 import numpy as np
-import tools.fraction_to_float
-import function_solver
+import Solver
+
 
 #list of options presented to the user
 my_options = ["1 = solve a function", "2 = statistical"]
@@ -16,7 +16,8 @@ for x in my_options:
 #user input
 option_selection = input("what are you trying to do? ")
 
-#makes the index logical to the user (enables options to start from 1)
-option_selection = int(option_selection - 1)
+if int(option_selection) == 1: 
+    Solver.funcSolver()
 
-int(option_selection)
+
+
