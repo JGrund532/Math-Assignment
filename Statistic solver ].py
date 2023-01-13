@@ -27,9 +27,9 @@ class Data (object):
         for i in range(len(MyData)):
           MyData[i] = float(MyData[i])
 
-def calculations ():
-       # statistics.mean(MyData)
 
-        #statistics.median (MyData)
+def calculations (data_set):
+            return statistics.mean({data_set})
+
 
 Data()
