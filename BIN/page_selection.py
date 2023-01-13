@@ -1,4 +1,4 @@
-import Solver 
+import BIN.Solver as Solver 
 import math 
 
 def function():
