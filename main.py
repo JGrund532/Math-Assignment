@@ -52,6 +52,7 @@ class Data (object):
         attempt_limit = float("inf")
         attempt_count = 0
 
+    #selecting data set type for standard devaition
         selections = ["1 = population", "2 = sample"] 
 
         for x in selections:
@@ -93,6 +94,7 @@ class Data (object):
         
         print("Mode: " + str(statistics.mode(data_set)))
 
+    #standard deviation functions for both data set types 
         if sample_type == 0: 
             
             print ("Standard deviation(P):" + str(statistics.pstdev(data_set)))

@@ -1,27 +1,34 @@
-attempt_limit = float("inf")
-attempt_count = 0
+def take_second (element):
+    return element [1]
 
-selections = ["1 = population", "2 = sample"] 
+def take_third (element):
+    return element[2]
 
-for x in selections:
-    print (x)
+def take_fourth (element):
+    return element [3]
 
-selections[0] = 1
-selections[1] = 2
+def take_fifth (element):
+    return element [4]
 
-while attempt_count < attempt_limit: 
-    sample_type = int(input ("Population or sample? "))
-    sample_type = sample_type - 1
-    attempt_count += 1
+def take_sixth (element):
+    return element [5]
 
-    if sample_type == selections.index(1):
+
+if func_select or try_again == options.index(0):
+    
+    trig_options = ["1 = Sine", "2 = Cosine", "3 = Tangent", "4 = sin -1", "5 = cos -1", "6 = tan -1"]
+    for functions in trig_options:
+        print (functions)
+
+trig_options[0:] = range(5)
+
+while attempt_count < attempt_limit:
+    selection = input ("Select trig function ")
+    if selection = trig_options.index(0):
+        TrigonometricOperators.sine(x)
         break
-
-    if sample_type == selections.index(2):
+    
+    trig_options.sort(key = take_second)
+    if selection = trig_options.index(0):
+        TrigonometricOperators.cosine(x)
         break
-
-if sample_type == 0:
-    print ("yes")
-
-if sample_type == 1:
-    print("no")
