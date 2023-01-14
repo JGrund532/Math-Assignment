@@ -5,10 +5,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 import statistics
 import tools.fraction_to_float
+import tools.list_maker
 
 
 
-class function_operators(object): 
+class FunctionOperators(object): 
     def __init__ (self):
 
     #choose function
@@ -31,13 +32,14 @@ class function_operators(object):
         myvariable = tools.fraction_to_float.convert_to_float(myvariable)
 
 
+
     #functions selected in the first part of the code
         myfunctions = ["sin", "cos", "tan", "sinh", "cosh", "tanh"] 
 
     #getattr runs the math module to find the functions within it, and matches with the inputted function and func selection
         runMath = getattr(math, myfunctions [funcSelection])
 
-        print(runMath(myvariable)) 
+        print(runMath((myvariable))) 
 
  
 
@@ -47,25 +49,39 @@ class function_operators(object):
 class Data (object):
     def __init__ (self): 
     
+        attempt_limit = float("inf")
+        attempt_count = 0
+
         selections = ["1 = population", "2 = sample"] 
 
         for x in selections:
             print (x)
 
+    #changing index elements to 1 and 2 to break the while loop that only allows correct input 
+        selections[0] = 1
+        selections[1] = 2
 
-    #Is the data set a sample of a larger data set or there whole population? (needed for stadard deviation)
-        mySelection = input ("Population or sample? ") 
-    
+        while attempt_count < attempt_limit: 
+            sample_type = int(input ("Population or sample? "))
+            sample_type = sample_type - 1
+            attempt_count += 1
 
-    #user input data set 
+            if sample_type == selections.index(1):
+                break
+
+            if sample_type == selections.index(2):
+                break
+            
+
+    #user input data set, see tools.list_maker for how it works   
         data_set = []
         n = int(input("Enter the population size "))
 
-        print("\n") #Uses n variable to accept data n amount of times 
-        for i in range(0, n): #starts a for loop with n amount of rows 
-            print("Enter Sample ", i + 1 , )
-            item = float(input()) #user input 
-            data_set.append(item) #appends the list after each input 
+        print("\n")  
+        for i in range(0, n): 
+            print("Enter element ", i + 1 , )
+            item = float(input()) #user input  
+            data_set.append(item) 
         
         print("Data set: ", data_set)
 
@@ -77,6 +93,17 @@ class Data (object):
         
         print("Mode: " + str(statistics.mode(data_set)))
 
+        if sample_type == 0: 
+            
+            print ("Standard deviation(P):" + str(statistics.pstdev(data_set)))
+
+            print ("Variance (P):" + str(statistics.pvariance(data_set)))
+
+        elif sample_type == 1:
+
+            print ("standard deviation (S):" + str(statistics.stdev(data_set)))
+
+            print ("Variance(S): " + str(statistics.variance(data_set)))
 
 
 
@@ -97,7 +124,7 @@ for x in my_options:
 option_selection = input("what are you trying to do? ")
 
 if int(option_selection) == 1: 
-    function_operators()
+    FunctionOperators()
    
 
 
