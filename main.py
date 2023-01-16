@@ -256,19 +256,15 @@ if int(option_selection) == my_options.index(1):
 
 if int(option_selection) == 3: 
 
-    #options = ["1 = Permutation ", "2 = Combination"]
-    items = ["1 = Probability that an event will happen", "2 = An event happening after x number of times"]
 
-
-    for x in items:
-        print (x)
-
-        items.index[0:] = range(3)
- 
+    items = ["1 = Single", "2 = Multiple"]
         
-    selection = int(input ("what would you like to calculate? "))
-        
+    selection = int(input ("Probability of a single event occuring or multiple? "))
+
     selection = selection - 1
+
+    items[0:] = range(3)
+
 
     if selection == items.index(0):
             #module class
