@@ -5,10 +5,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import statistics_output
 import tools.fraction_to_float
-import function_operators
+import function_formulas
 import sys
 import statistics
-
 
 
 
@@ -23,7 +22,7 @@ def take_fourth(elem):
 
 
 
-
+#attempt limit used when initiating while loops throughout code
 
 attempt_limit = float("inf")
 attempt_count = 0
@@ -38,7 +37,7 @@ class TrigOperator(object):
         
         theta = "θ" 
 
-        trig_options = ["1 = Sine", "2 = Cosine", "3 = Tangent", "4 = sin -1", "5 = cos -1", "6 = tan -1"]
+        trig_options = ["1 = sine", "2 = cosine", "3 = tangent", "4 = sin -1", "5 = cos -1", "6 = tan -1"]
         for functions in trig_options:
             print (functions)
 
@@ -52,42 +51,42 @@ class TrigOperator(object):
             if selection == trig_options.index(0):
                 θ = input ("Input angle ")
                 θ = tools.fraction_to_float.convert_to_float(θ)
-                answer = function_operators.TrigonometricOperators.sine(float(θ))
+                answer = function_formulas.TrigonometricOperators.sine(float(θ))
                 print ( "Sine of ",θ, "=", answer)
                 break
 
             if selection == trig_options.index(1):
                 θ = input ("Input angle ")
                 θ = tools.fraction_to_float.convert_to_float(θ)
-                answer = function_operators.TrigonometricOperators.cosine(float(θ))
+                answer = function_formulas.TrigonometricOperators.cosine(float(θ))
                 print ( "Sine of ",θ, "=", answer)
                 break
 
             if selection == trig_options.index(2):
                 θ = input ("Input angle ")
                 θ = tools.fraction_to_float.convert_to_float(θ)
-                answer = function_operators.TrigonometricOperators.tangent(float(θ))
+                answer = function_formulas.TrigonometricOperators.tangent(float(θ))
                 print ( "Sine of ",θ, "=", answer)
                 break
 
             if selection == trig_options.index(3):
                 x = input("Input O/H ")
                 x = tools.fraction_to_float.convert_to_float(x)
-                answer = function_operators.TrigonometricOperators.asin(x)
+                answer = function_formulas.TrigonometricOperators.asin(x)
                 print (f"{theta} =", math.degrees(answer))
                 break
 
             if selection == trig_options.index(4):
                 x = input("Input A/H ")
                 x = tools.fraction_to_float.convert_to_float(x)
-                answer = function_operators.TrigonometricOperators.acos(x)
+                answer = function_formulas.TrigonometricOperators.acos(x)
                 print (f"{theta} =", math.degrees(answer))
                 break
 
             if selection == trig_options.index(5):
                 x = input("Input O/A ")
                 x = tools.fraction_to_float.convert_to_float(x)
-                answer = function_operators.TrigonometricOperators.atan(x)
+                answer = function_formulas.TrigonometricOperators.atan(x)
                 print (f"{theta} =", math.degrees(answer))
                 break
 
@@ -105,7 +104,7 @@ class TrigOperator(object):
 class HyperbolicOperator:
     def __init__ (self):
 
-        hyperbolic_options = ["1 = Sinh", "2 = Cosh", "3 = Tanh", "4 = sinh -1", "5 = cosh -1", "6 = tanh -1"]
+        hyperbolic_options = ["1 = sinh", "2 = cosh", "3 = tanh", "4 = sinh -1", "5 = cosh -1", "6 = tanh -1"]
         for functions in hyperbolic_options:
             print (functions)
 
@@ -116,34 +115,57 @@ class HyperbolicOperator:
             selection = selection -1 
           
             if selection == hyperbolic_options.index(0):
-                answer = function_operators.HyperbolicOperators.sinh(x)
+                answer = function_formulas.HyperbolicOperators.sinh(x)
                 print (answer)
                 break
 
-            if selection == hyperbolic_options.index(0):
-                answer = function_operators.HyperbolicOperators.cosh(x)
+            if selection == hyperbolic_options.index(1):
+                answer = function_formulas.HyperbolicOperators.cosh(x)
                 print (answer)
                 break
 
-            if selection == hyperbolic_options.index(0):
-                answer = function_operators.HyperbolicOperators.tanh(x)
+            if selection == hyperbolic_options.index(2):
+                answer = function_formulas.HyperbolicOperators.tanh(x)
                 print (answer)
                 break
 
-            if selection == hyperbolic_options.index(0):
-                answer = function_operators.HyperbolicOperators.asinh(x)
+            if selection == hyperbolic_options.index(3):
+                answer = function_formulas.HyperbolicOperators.asinh(x)
                 print (answer)
                 break
 
-            if selection == hyperbolic_options.index(0):
-                answer = function_operators.HyperbolicOperators.cosh(x)
+            if selection == hyperbolic_options.index(4):
+                answer = function_formulas.HyperbolicOperators.cosh(x)
                 print (answer)
                 break
 
-            if selection == hyperbolic_options.index(0):
-                answer = function_operators.HyperbolicOperators.tanh(x)
+            if selection == hyperbolic_options.index(5):
+                answer = function_formulas.HyperbolicOperators.tanh(x)
                 print (answer)
                 break
+
+
+
+
+
+
+
+
+
+
+class ProbabilityOperator (object):
+    def __init__ (self):
+
+
+        data_set_selection = ["Do you have a data set?", "1 = Yes", "2 = No"]
+        for x in data_set: 
+            print (x)
+
+        data_set_selection[0:] = range (3)
+
+        selection = int(input(""))
+
+        selection = selection - 1
 
 
 
@@ -174,7 +196,7 @@ class HyperbolicOperator:
 
 
 
-my_options = ["1 = Function Tool", "2 = Statistic Tool", "3 = Probability Tool", "4 = Arithmetic"]
+my_options = ["1 = Function Tool", "2 = Statistic Tool", "3 = Probability Tool", "4 = Arithmetic", "5 = Equation Solver"]
 
 for x in my_options:
     print(x)
@@ -255,23 +277,26 @@ if int(option_selection) == my_options.index(1):
 #if user selects probabilty tool 
 
 if int(option_selection) == 3: 
+    ProbabilityOperator()
+ #   selection = int(input ("Enter paramters  "))
 
-
-    items = ["1 = Single", "2 = Multiple"]
+  #  items = ["n = ", "r = "]
         
-    selection = int(input ("Probability of a single event occuring or multiple? "))
+   # for x in items:
+    #    print (x)
 
-    selection = selection - 1
-
-    items[0:] = range(3)
+    #print ("n = Number of members", " r = selected members from the set")
 
 
-    if selection == items.index(0):
+    #items[0:] = range(2)
+
+
+    #if selection == items.index(0):
             #module class
 
-    if selection == items.index(1):
+    #if selection == items.index(1):
             #module class 
 
-#    elif selection > range(2): 
- #       while attempt_count < attempt_limit:
-  #          try_again = input ("Error, select a number 1 to ", items.index(2))
+    #elif selection > range(2): 
+     #   while attempt_count < attempt_limit:
+      #      try_again = input ("Error, select a number 1 to ", items.index(2))

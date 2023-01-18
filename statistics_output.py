@@ -1,6 +1,6 @@
 import statistics
 import tools.fraction_to_float
-import function_operators
+import function_formulas
 import math 
 
 

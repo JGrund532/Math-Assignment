@@ -1,5 +1,7 @@
 #creates a list with n amount of indexes, user inputs each element manually   
 
+
+
 data_set = []
 n = int(input("Enter the population size "))
 

@@ -1,19 +1,53 @@
-x = 9.945111111
+import math 
+import probability_formulas
+import sympy 
+from sympy import *
 
-σ = 0.061074636
+attempt_limit = float("inf")
+attempt_count = 0
+init_printing(use_unicode=True)
 
-lsl = 9.761887204
 
-usl = 10.12833502
+class ProbabilityOperator (object):
+    def __init__ (self):
 
-def cpk_u ():
-    return (usl - x)/(3*σ)
+        q, p, n = symbols('q p n')
 
-def cpk_l():
-    return (x - lsl)/(3*σ)
+        p = input ("Pecentage of faulty parts: " )
 
-min_CPK = cpk_l() 
-print("L = ", min_CPK) 
+        print (f"{p}","%")
+        
+        p = float(p)/100
 
-max_CPK = cpk_u()
-print("U = ", max_CPK)
+        q = 1 - p
+
+        n = Integer(input("sample size: "))
+
+        r = Integer(input("Amount of defect parts you're looking for: "))
+
+#calculating binomial termcoefficients
+        binom_coef = probability_formulas.formulas.combination(n, r)
+
+        expansion = probability_formulas.formulas.binomial_expansion(q, p, n)
+      
+        expansion = str(expansion)
+
+        expansion = expansion.split("+")
+
+        expansion = expansion[((int(r)*-1))-1]
+
+        print(expansion)
+
+        expansion = str(expansion)
+
+        expansion = eval(expansion)
+
+        print(expansion)
+
+        print("Reavlue r? Type N to cancel")
+
+        go_again = input ("r: ") 
+        if go_again == "N":
+          break
+
+ProbabilityOperator()
