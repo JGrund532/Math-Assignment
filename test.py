@@ -5,7 +5,6 @@ from sympy import *
 
 attempt_limit = float("inf")
 attempt_count = 0
-init_printing(use_unicode=True)
 
 
 class ProbabilityOperator (object):
@@ -13,41 +12,43 @@ class ProbabilityOperator (object):
 
         q, p, n = symbols('q p n')
 
-        p = input ("Pecentage of faulty parts: " )
+
+        print("Pecentage of faulty parts: ")
+        p = input ('p: ')
 
         print (f"{p}","%")
         
         p = float(p)/100
 
         q = 1 - p
+        print ('q = ', q)
 
-        n = Integer(input("sample size: "))
+        print("sample size: ")
+        n = Integer(input('n: '))
 
-        r = Integer(input("Amount of defect parts you're looking for: "))
+        while attempt_count < attempt_limit:
+            
+          print('Permutation value:')
+          r = Integer(input('r: '))
 
-#calculating binomial termcoefficients
-        binom_coef = probability_formulas.formulas.combination(n, r)
+          expansion = probability_formulas.formulas.binomial_expansion(q, p, n)
+          
+          expansion = str(expansion)
 
-        expansion = probability_formulas.formulas.binomial_expansion(q, p, n)
-      
-        expansion = str(expansion)
+          print (expansion)
 
-        expansion = expansion.split("+")
+          expansion = expansion.split('+')
 
-        expansion = expansion[((int(r)*-1))-1]
+          expansion = expansion[((int(r)*-1))-1]
 
-        print(expansion)
+          print (expansion, '=')
 
-        expansion = str(expansion)
+          expansion = eval(expansion)
 
-        expansion = eval(expansion)
+          print(expansion)
+            
+          print("Reavlue r? Type N to cancel")
 
-        print(expansion)
 
-        print("Reavlue r? Type N to cancel")
-
-        go_again = input ("r: ") 
-        if go_again == "N":
-          break
 
 ProbabilityOperator()

@@ -277,26 +277,6 @@ if int(option_selection) == my_options.index(1):
 #if user selects probabilty tool 
 
 if int(option_selection) == 3: 
+    
+    options = ['1 = Binomial distribution ']
     ProbabilityOperator()
- #   selection = int(input ("Enter paramters  "))
-
-  #  items = ["n = ", "r = "]
-        
-   # for x in items:
-    #    print (x)
-
-    #print ("n = Number of members", " r = selected members from the set")
-
-
-    #items[0:] = range(2)
-
-
-    #if selection == items.index(0):
-            #module class
-
-    #if selection == items.index(1):
-            #module class 
-
-    #elif selection > range(2): 
-     #   while attempt_count < attempt_limit:
-      #      try_again = input ("Error, select a number 1 to ", items.index(2))
