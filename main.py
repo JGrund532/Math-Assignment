@@ -8,7 +8,9 @@ import tools.fraction_to_float
 import function_formulas
 import sys
 import statistics
-
+import sympy
+from sympy import *
+import probability_formulas
 
 
 def take_second(elem):
@@ -156,16 +158,55 @@ class HyperbolicOperator:
 class ProbabilityOperator (object):
     def __init__ (self):
 
+        q, p, n = symbols('q p n')
 
-        data_set_selection = ["Do you have a data set?", "1 = Yes", "2 = No"]
-        for x in data_set: 
-            print (x)
+        print("Pecentage of faulty parts: ")
+        p = input ('p: ')
+        print (f"{p}","%")        
+        p = Float(p)/100
 
-        data_set_selection[0:] = range (3)
+        q = 1 - p
+        print ('q = ', q)
+        q = Float(q)
 
-        selection = int(input(""))
+        print("sample size: ")
+        n = Integer(input('n: '))
 
-        selection = selection - 1
+
+    #while loop to allow multiple attempts to re-evaluate w/ different values of r when r < n 
+        while attempt_count < attempt_limit:
+              
+          print('Permutation value:')
+          r = Integer(input('r: '))
+
+          expansion = probability_formulas.formulas.binomial_expansion(q, p, n)            
+          expansion = str(expansion)
+          print (expansion)
+          expansion = expansion.split('+')
+
+          expansion = expansion[((int(r)*-1)-1)]
+          print (expansion, '=')
+          expansion = eval(expansion)
+          print(expansion)
+
+       #breaks while loop if user no longer needs       
+          print("Revalue r? Type N to cancel, Y to go again")
+          go_again = input('')
+          if go_again.upper() == 'N':
+            break
+
+
+
+
+#        data_set_selection = ["Do you have a data set?", "1 = Yes", "2 = No"]
+ #       for x in data_set: 
+  #          print (x)
+
+   #     data_set_selection[0:] = range (3)
+
+    #    selection = int(input(""))
+
+     #   selection = selection - 1
 
 
 
@@ -276,7 +317,7 @@ if int(option_selection) == my_options.index(1):
 
 #if user selects probabilty tool 
 
-if int(option_selection) == 3: 
+if int(option_selection) == my_options.index(2): 
     
-    options = ['1 = Binomial distribution ']
+    #options = ['1 = Binomial distribution ']
     ProbabilityOperator()

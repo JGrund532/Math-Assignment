@@ -10,8 +10,6 @@ attempt_count = 0
 class ProbabilityOperator (object):
     def __init__ (self):
 
-        #@classmethod
-        #def binom_calc(bpc):
         q, p, n = symbols('q p n')
 
         print("Pecentage of faulty parts: ")

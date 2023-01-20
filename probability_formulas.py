@@ -3,8 +3,11 @@ import matplotlib
 import fractions
 import numpy as np
 import function_formulas
-import sympy 
+import sympy
+from sympy import *
 
+attempt_count = 0
+attempt_limit = float('inf')
 
 
 class formulas (object):
@@ -26,16 +29,5 @@ class formulas (object):
             q, p = sympy.symbols ("q p")
             formula = (q + p)**n
             return formula.expand()
-
-  
-        #    elif selection > range(2): 
-        #       while attempt_count < attempt_limit:
-        #          try_again = input ("Error, select a number 1 to ", items.index(2))
-
-
-        #possible no of outcomes 
-        #no of outcomes
-
-
 
 

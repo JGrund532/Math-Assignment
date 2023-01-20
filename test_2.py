@@ -1,40 +1,31 @@
-import math 
+import math
 import sympy 
+from sympy import *
 import probability_formulas
 
 
-class ProbabilityOperator ():
-        def __init__ (self):
 
-                
-            n = Integer(input("sample size: "))
+class ProbabilityOperator (object):
+    def __init__ (self):
 
-            r = Integer(input("Amount of defect parts you're looking for: "))
+        q, p, n = symbols('q p n')
 
-    #calculating binomial termcoefficients
-            binom_coef = probability_formulas.formulas.combination(n, r)
+        print("Pecentage of faulty parts: ")
+        p = input ('p: ')
+        print (f"{p}","%")
+          
+        p = float(p)/100
+        Float(p)
 
-            expansion = probability_formulas.formulas.binomial_expansion(q, p, n)
-        
-            expansion = str(expansion)
+        q = 1 - p
+        print ('q = ', q)
+        Float(q)
 
-            expansion = expansion.split("+")
+        print("sample size: ")
+        n = Integer(input('n: '))
 
-            expansion = expansion[((int(r)*-1))-1]
-
-            print(expansion)
-
-            expansion = str(expansion)
-
-            expansion = eval(expansion)
-
-            print(expansion)
-
-            print("Reavlue r? Type N to cancel")
-
-            go_again = input ("r: ") 
-            if go_again == "N":
-                break
-        
+        probability_formulas.formulas.binom_expand_calc(q, p, n)
 
 ProbabilityOperator()
+
+
