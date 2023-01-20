@@ -1,18 +1,18 @@
 import math
-import matplotlib
-import fractions
-import matplotlib.pyplot as plt
-import numpy as np
-import tools.fraction_to_float
+import sympy
+from sympy import *
+from sympy import sin, cos, tan, asin, acos, atan
+from sympy import sinh, cosh, tanh, asinh, acosh, atanh 
 
 
 #trigonometric functions
 
-class TrigonometricOperators:
+class Trigonometric:
     
         @staticmethod
         def sine (x):
-            return math.sin(math.radians(x))
+            return sin (x*(pi/180)) #need to updat to rest of functions
+            #return math.sin(math.radians(x))
 
         @staticmethod
         def cosine (x):
@@ -37,10 +37,11 @@ class TrigonometricOperators:
 
 #hyperbolic functions 
 
-class HyperbolicOperators:
+class Hyperbolic:
 
         @staticmethod
         def sinh (x):
+            #return sin(x)
             return math.sinh(x)
 
         @staticmethod
@@ -62,3 +63,15 @@ class HyperbolicOperators:
         @staticmethod
         def atanh (x): 
             return math.atanh(x)
+
+
+
+class Logarithmic: 
+
+        @staticmethod
+        def base10 (x):
+            return 
+
+        @staticmethod
+        def natural (x):
+            return

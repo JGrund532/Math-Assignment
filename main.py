@@ -1,16 +1,6 @@
-import math
-import matplotlib
-import fractions
-import matplotlib.pyplot as plt
-import numpy as np
+import function_operators
 import statistics_output
-import tools.fraction_to_float
-import function_formulas
-import sys
-import statistics
-import sympy
-from sympy import *
-import probability_formulas
+import probability_operators
 
 
 def take_second(elem):
@@ -30,205 +20,10 @@ attempt_limit = float("inf")
 attempt_count = 0
 
 
-
-
-#operator to run trig options form function opertors module 
-
-class TrigOperator(object): 
-    def __init__ (self):
-        
-        theta = "θ" 
-
-        trig_options = ["1 = sine", "2 = cosine", "3 = tangent", "4 = sin -1", "5 = cos -1", "6 = tan -1"]
-        for functions in trig_options:
-            print (functions)
-
-        trig_options[0:] = range(6)
-
-        while attempt_count < attempt_limit:
-            selection = int(input ("Select trig function "))
-            selection = selection -1 
-           
-           
-            if selection == trig_options.index(0):
-                θ = input ("Input angle ")
-                θ = tools.fraction_to_float.convert_to_float(θ)
-                answer = function_formulas.TrigonometricOperators.sine(float(θ))
-                print ( "Sine of ",θ, "=", answer)
-                break
-
-            if selection == trig_options.index(1):
-                θ = input ("Input angle ")
-                θ = tools.fraction_to_float.convert_to_float(θ)
-                answer = function_formulas.TrigonometricOperators.cosine(float(θ))
-                print ( "Sine of ",θ, "=", answer)
-                break
-
-            if selection == trig_options.index(2):
-                θ = input ("Input angle ")
-                θ = tools.fraction_to_float.convert_to_float(θ)
-                answer = function_formulas.TrigonometricOperators.tangent(float(θ))
-                print ( "Sine of ",θ, "=", answer)
-                break
-
-            if selection == trig_options.index(3):
-                x = input("Input O/H ")
-                x = tools.fraction_to_float.convert_to_float(x)
-                answer = function_formulas.TrigonometricOperators.asin(x)
-                print (f"{theta} =", math.degrees(answer))
-                break
-
-            if selection == trig_options.index(4):
-                x = input("Input A/H ")
-                x = tools.fraction_to_float.convert_to_float(x)
-                answer = function_formulas.TrigonometricOperators.acos(x)
-                print (f"{theta} =", math.degrees(answer))
-                break
-
-            if selection == trig_options.index(5):
-                x = input("Input O/A ")
-                x = tools.fraction_to_float.convert_to_float(x)
-                answer = function_formulas.TrigonometricOperators.atan(x)
-                print (f"{theta} =", math.degrees(answer))
-                break
-
-
-
-
-
-
-
-
-
-
-#operator to run hyoerbolic functions 
-
-class HyperbolicOperator:
-    def __init__ (self):
-
-        hyperbolic_options = ["1 = sinh", "2 = cosh", "3 = tanh", "4 = sinh -1", "5 = cosh -1", "6 = tanh -1"]
-        for functions in hyperbolic_options:
-            print (functions)
-
-        hyperbolic_options[0:] = range(6)
-
-        while attempt_count < attempt_limit:
-            selection = int(input ("Select hyperbolic function "))
-            selection = selection -1 
-          
-            if selection == hyperbolic_options.index(0):
-                answer = function_formulas.HyperbolicOperators.sinh(x)
-                print (answer)
-                break
-
-            if selection == hyperbolic_options.index(1):
-                answer = function_formulas.HyperbolicOperators.cosh(x)
-                print (answer)
-                break
-
-            if selection == hyperbolic_options.index(2):
-                answer = function_formulas.HyperbolicOperators.tanh(x)
-                print (answer)
-                break
-
-            if selection == hyperbolic_options.index(3):
-                answer = function_formulas.HyperbolicOperators.asinh(x)
-                print (answer)
-                break
-
-            if selection == hyperbolic_options.index(4):
-                answer = function_formulas.HyperbolicOperators.cosh(x)
-                print (answer)
-                break
-
-            if selection == hyperbolic_options.index(5):
-                answer = function_formulas.HyperbolicOperators.tanh(x)
-                print (answer)
-                break
-
-
-
-
-
-
-
-
-
-
-class ProbabilityOperator (object):
-    def __init__ (self):
-
-        q, p, n = symbols('q p n')
-
-        print("Pecentage of faulty parts: ")
-        p = input ('p: ')
-        print (f"{p}","%")        
-        p = Float(p)/100
-
-        q = 1 - p
-        print ('q = ', q)
-        q = Float(q)
-
-        print("sample size: ")
-        n = Integer(input('n: '))
-
-
-    #while loop to allow multiple attempts to re-evaluate w/ different values of r when r < n 
-        while attempt_count < attempt_limit:
-              
-          print('Permutation value:')
-          r = Integer(input('r: '))
-
-          expansion = probability_formulas.formulas.binomial_expansion(q, p, n)            
-          expansion = str(expansion)
-          print (expansion)
-          expansion = expansion.split('+')
-
-          expansion = expansion[((int(r)*-1)-1)]
-          print (expansion, '=')
-          expansion = eval(expansion)
-          print(expansion)
-
-       #breaks while loop if user no longer needs       
-          print("Revalue r? Type N to cancel, Y to go again")
-          go_again = input('')
-          if go_again.upper() == 'N':
-            break
-
-
-
-
-#        data_set_selection = ["Do you have a data set?", "1 = Yes", "2 = No"]
- #       for x in data_set: 
-  #          print (x)
-
-   #     data_set_selection[0:] = range (3)
-
-    #    selection = int(input(""))
-
-     #   selection = selection - 1
-
-
-
-
-
-
-
-
-
-
 #class AnswerLog (self):
 #    def __init__ (self, answer_1, answer_2):
 #        self.answer_1 = answer_1
 #        self.answer_2 = answer_2
-
-
-
-
-
-
-
-
 
 
 #                           _________________________________________________________________________________________________________                        
@@ -262,23 +57,62 @@ if int(option_selection) == my_options.index(0):
     options[0:] = range(4)
 
     #user input 
-    func_select = int(input("what is your function type?" ))
+    func_select = int(input("Function type: " ))
 
     func_select = func_select - 1 
 
-    #while loop triggers if user input is invalid 
-    if func_select > 3:
+    if func_select == options.index(0):
+        function_operators.TrigOperator()
+
+
+    if func_select == options.index(1):
+        
+        options = ['1 = Hyperbolic', '2 = Inverse hyperbolic']
+        for x in options: 
+            print (x)
+
+        options[0:] = range(2)
+
+        selection = input('Function Type: ')
+        selection = int(selection)
+        selection = selection - 1
+
+
+        if selection == options.index(0):
+            function_operators.HyperbolicOperator()
+
+        if selection == options.index(1):
+            function_operators.InverseHyperbolic()
+
+#while loop triggers if user input is invalid 
+        if selection > 1:
+            while attempt_count < attempt_limit:
+                try_again = int(input ("Error, enter a number 1 to 4 to select. What is your function? "))
+
+                try_again = try_again - 1
+
+                if try_again == options.index(0):
+                    function_operators.HyperbolicOperator()
+                    break  
+
+                if try_again == options.index(1):
+                    function_operators.InverseHyperbolic()
+                    break 
+
+
+#while loop triggers if user input is invalid 
+    if func_select > 1:
         while attempt_count < attempt_limit:
-            try_again = int(input ("error, enter a number 1 to 4 to select. What is your function? "))
+            try_again = int(input ("Error, enter a number 1 to 4 to select. What is your function? "))
 
             try_again = try_again - 1
 
             if try_again == options.index(0):
-                TrigOperator()
+                function_operators.TrigOperator()
                 break  
 
             if try_again == options.index(1):
-                HyperbolicOperator()
+                function_operators.HyperbolicOperator()
                 break
 
             if try_again == options.index(2): 
@@ -288,12 +122,6 @@ if int(option_selection) == my_options.index(0):
                 break
         
 
-#user inputs correctly first time operator triggers
-    if func_select == options.index(0):
-        TrigOperator()
-
-    if func_select == options.index(1):
-        HyperbolicOperator()
 
 
 
@@ -317,7 +145,5 @@ if int(option_selection) == my_options.index(1):
 
 #if user selects probabilty tool 
 
-if int(option_selection) == my_options.index(2): 
-    
-    #options = ['1 = Binomial distribution ']
-    ProbabilityOperator()
+if int(option_selection) == my_options.index(2):     
+    probability_operators.ProbabilityOperator()
