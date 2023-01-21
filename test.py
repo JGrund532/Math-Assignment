@@ -3,8 +3,8 @@ from sympy import *
 from sympy import sin
 import math 
 
-x = 22
-answer = sin(x*(pi/180))
+x = 35/50
+answer = atanh(x)
 #answer = str(x)
 #answer = sympify(answer)
 answer = answer.evalf(100)
@@ -12,6 +12,5 @@ answer = answer.evalf(100)
 print (answer)
 
 
-answer_2 = math.sin(x*(pi/180))
-print(answer_2)
+
 

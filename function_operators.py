@@ -1,6 +1,5 @@
-import math 
-import sympy 
 from sympy import *
+from mpmath import *
 import tools.fraction_to_float
 import function_formulas
 
@@ -29,8 +28,7 @@ class TrigOperator(object):
            
             if selection == trig_options.index(0):
                 θ = input ("Input angle ")
-                d = Integer(input ('Accuracy(dcml places): '))#need to updst to other functions
-                θ = tools.fraction_to_float.convert_to_float(θ)
+                d = Integer(input ('Accuracy(dcml places): '))
                 answer = function_formulas.Trigonometric.sine(Float(θ))
                 answer = answer.evalf(d)
                 print ( "Sine of ",θ, "=", answer)
@@ -38,37 +36,48 @@ class TrigOperator(object):
 
             if selection == trig_options.index(1):
                 θ = input ("Input angle ")
-                θ = tools.fraction_to_float.convert_to_float(θ)
-                answer = function_formulas.Trigonometric.cosine(float(θ))
-                print ( "Sine of ",θ, "=", answer)
+                d = Integer (input ('Accuracy(dcml places: '))
+                answer = function_formulas.Trigonometric.cosine(Float(θ))
+                answer = answer.evalf(d)
+                print ( "Cosine of ",θ, "=", answer)
                 break
 
             if selection == trig_options.index(2):
                 θ = input ("Input angle ")
-                θ = tools.fraction_to_float.convert_to_float(θ)
-                answer = function_formulas.Trigonometric.tangent(float(θ))
-                print ( "Sine of ",θ, "=", answer)
+                d = Integer (input ('Accuracy(dcml places: '))
+                answer = function_formulas.Trigonometric.tangent(Float(θ))
+                answer = answer.evalf(d)
+                print ( "Tangent of ",θ, "=", answer)
                 break
 
             if selection == trig_options.index(3):
-                x = input("Input O/H ")
-                x = tools.fraction_to_float.convert_to_float(x)
+                x = input ("Input O/H ")
+                d = Integer (input ('Accuracy(dcml places: '))
                 answer = function_formulas.Trigonometric.asin(x)
-                print (f"{theta} =", math.degrees(answer))
+                answer = answer.evalf(d)
+                mp.dps = d; mp.pretty = True
+                answer = degrees(answer)  
+                print (f"{theta} =",(answer))
                 break
 
             if selection == trig_options.index(4):
                 x = input("Input A/H ")
-                x = tools.fraction_to_float.convert_to_float(x)
+                d = Integer (input ('Accuracy(dcml places: '))
                 answer = function_formulas.Trigonometric.acos(x)
-                print (f"{theta} =", math.degrees(answer))
+                answer = answer.evalf(d)
+                mp.dps = d; mp.pretty = True
+                answer = degrees(answer)  
+                print (f"{theta} =",(answer))
                 break
 
             if selection == trig_options.index(5):
                 x = input("Input O/A ")
-                x = tools.fraction_to_float.convert_to_float(x)
-                answer = function_formulas.Trigonometric.atan(x)
-                print (f"{theta} =", math.degrees(answer))
+                d = Integer (input ('Accuracy(dcml places: '))
+                answer = function_formulas.Trigonometric.atan(Float(x))
+                answer = answer.evalf(d)
+                mp.dps = d; mp.pretty = True
+                answer = degrees(answer)  
+                print (f"{theta} =",(answer))
                 break
 
 
@@ -90,24 +99,27 @@ class HyperbolicOperator:
             if selection == hyperbolic_options.index(0):
                 print('Input x value ')
                 x = input('x = ')
-                x = tools.fraction_to_float.convert_to_float(x)
-                answer = function_formulas.Hyperbolic.sinh(x)
+                d = Integer (input ('Accuracy(dcml places: '))
+                answer = function_formulas.Hyperbolic.sinh(Float(x))
+                answer =answer.evalf(d)
                 print ('y =', answer)
                 break
 
             if selection == hyperbolic_options.index(1):
                 print('Input x value ')
                 x = input('x = ')
-                x = tools.fraction_to_float.convert_to_float(x)
-                answer = function_formulas.Hyperbolic.cosh(x)
+                d = Integer (input ('Accuracy(dcml places: '))
+                answer = function_formulas.Hyperbolic.cosh(Float(x))
+                answer = answer.evalf(d)
                 print ('y =', answer)
                 break
 
             if selection == hyperbolic_options.index(2):
                 print('Input x value ')
                 x = input('x = ')
-                x = tools.fraction_to_float.convert_to_float(x)
+                d = Integer (input ('Accuracy(dcml places: '))
                 answer = function_formulas.Hyperbolic.tanh(x)
+                answer = answer.evalf(d)
                 print ('y =', answer)
                 break
 
@@ -131,24 +143,27 @@ class InverseHyperbolic:
             if selection == hyperbolic_options.index(0):
                 print('Input y value ')
                 x = input('y = ')
-                x = tools.fraction_to_float.convert_to_float(x)
-                answer = function_formulas.Hyperbolic.asinh(x)
+                d = Integer (input ('Accuracy(dcml places: '))
+                answer = function_formulas.Hyperbolic.asinh(Float(x))
+                answer = answer.evalf(d)
                 print ('x =', answer)
                 break
 
             if selection == hyperbolic_options.index(1):
                 print('Input y value ')
                 x = input('y = ')
-                x = tools.fraction_to_float.convert_to_float(x)
-                answer = function_formulas.Hyperbolic.cosh(x)
+                d = Integer (input ('Accuracy(dcml places: '))
+                answer = function_formulas.Hyperbolic.acosh(Float(x))
+                answer = answer.evalf(d)
                 print ('x =', answer)
                 break
 
             if selection == hyperbolic_options.index(2):
                 print('Input y value ')
                 x = input('y = ')
-                x = tools.fraction_to_float.convert_to_float(x)
-                answer = function_formulas.Hyperbolic.tanh(x)
+                d = Integer (input ('Accuracy(dcml places: '))
+                answer = function_formulas.Hyperbolic.atanh(Float(x))
+                answer = answer.evalf (d)
                 print ('x =', answer)
                 break
 

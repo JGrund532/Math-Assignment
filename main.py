@@ -84,7 +84,7 @@ if int(option_selection) == my_options.index(0):
         if selection == options.index(1):
             function_operators.InverseHyperbolic()
 
-#while loop triggers if user input is invalid 
+#while loop triggers if user input is invalid 1
         if selection > 1:
             while attempt_count < attempt_limit:
                 try_again = int(input ("Error, enter a number 1 to 4 to select. What is your function? "))
