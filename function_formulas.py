@@ -1,7 +1,5 @@
 import math
 from sympy import *
-from sympy import sin, cos, tan, asin, acos, atan
-from sympy import sinh, cosh, tanh, asinh, acosh, atanh 
 
 
 #trigonometric functions
@@ -67,8 +65,12 @@ class Logarithmic:
 
         @staticmethod
         def base10 (x):
-            return 
+            return log (x, 10)
 
         @staticmethod
         def natural (x):
-            return
+            return log(x)
+
+        @staticmethod
+        def x_y (x, y):
+            return log(x, y)

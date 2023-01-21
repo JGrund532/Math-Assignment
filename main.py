@@ -43,7 +43,14 @@ my_options[:0] = range(5)
 
 option_selection = option_selection - 1
 
-#input function catagory 
+
+
+
+
+
+
+
+#function selection type for index 0
 
 if int(option_selection) == my_options.index(0):
 
@@ -98,7 +105,10 @@ if int(option_selection) == my_options.index(0):
                 if try_again == options.index(1):
                     function_operators.InverseHyperbolic()
                     break 
+    
 
+    if func_select == options.index(2):
+        function_operators.LogarithmicOperators()
 
 #while loop triggers if user input is invalid 
     if func_select > 1:

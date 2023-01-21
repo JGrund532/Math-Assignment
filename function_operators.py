@@ -28,7 +28,7 @@ class TrigOperator(object):
            
             if selection == trig_options.index(0):
                 θ = input ("Input angle ")
-                d = Integer(input ('Accuracy(dcml places): '))
+                d = Integer(input ('Accuracy: '))
                 answer = function_formulas.Trigonometric.sine(Float(θ))
                 answer = answer.evalf(d)
                 print ( "Sine of ",θ, "=", answer)
@@ -36,7 +36,7 @@ class TrigOperator(object):
 
             if selection == trig_options.index(1):
                 θ = input ("Input angle ")
-                d = Integer (input ('Accuracy(dcml places: '))
+                d = Integer (input ('Accuracy: '))
                 answer = function_formulas.Trigonometric.cosine(Float(θ))
                 answer = answer.evalf(d)
                 print ( "Cosine of ",θ, "=", answer)
@@ -44,7 +44,7 @@ class TrigOperator(object):
 
             if selection == trig_options.index(2):
                 θ = input ("Input angle ")
-                d = Integer (input ('Accuracy(dcml places: '))
+                d = Integer (input ('Accuracy: '))
                 answer = function_formulas.Trigonometric.tangent(Float(θ))
                 answer = answer.evalf(d)
                 print ( "Tangent of ",θ, "=", answer)
@@ -52,7 +52,7 @@ class TrigOperator(object):
 
             if selection == trig_options.index(3):
                 x = input ("Input O/H ")
-                d = Integer (input ('Accuracy(dcml places: '))
+                d = Integer (input ('Accuracy: '))
                 answer = function_formulas.Trigonometric.asin(x)
                 answer = answer.evalf(d)
                 mp.dps = d; mp.pretty = True
@@ -62,7 +62,7 @@ class TrigOperator(object):
 
             if selection == trig_options.index(4):
                 x = input("Input A/H ")
-                d = Integer (input ('Accuracy(dcml places: '))
+                d = Integer (input ('Accuracy: '))
                 answer = function_formulas.Trigonometric.acos(x)
                 answer = answer.evalf(d)
                 mp.dps = d; mp.pretty = True
@@ -72,7 +72,7 @@ class TrigOperator(object):
 
             if selection == trig_options.index(5):
                 x = input("Input O/A ")
-                d = Integer (input ('Accuracy(dcml places: '))
+                d = Integer (input ('Accuracy: '))
                 answer = function_formulas.Trigonometric.atan(Float(x))
                 answer = answer.evalf(d)
                 mp.dps = d; mp.pretty = True
@@ -99,7 +99,7 @@ class HyperbolicOperator:
             if selection == hyperbolic_options.index(0):
                 print('Input x value ')
                 x = input('x = ')
-                d = Integer (input ('Accuracy(dcml places: '))
+                d = Integer (input ('Accuracy: '))
                 answer = function_formulas.Hyperbolic.sinh(Float(x))
                 answer =answer.evalf(d)
                 print ('y =', answer)
@@ -108,7 +108,7 @@ class HyperbolicOperator:
             if selection == hyperbolic_options.index(1):
                 print('Input x value ')
                 x = input('x = ')
-                d = Integer (input ('Accuracy(dcml places: '))
+                d = Integer (input ('Accuracy: '))
                 answer = function_formulas.Hyperbolic.cosh(Float(x))
                 answer = answer.evalf(d)
                 print ('y =', answer)
@@ -117,7 +117,7 @@ class HyperbolicOperator:
             if selection == hyperbolic_options.index(2):
                 print('Input x value ')
                 x = input('x = ')
-                d = Integer (input ('Accuracy(dcml places: '))
+                d = Integer (input ('Accuracy: '))
                 answer = function_formulas.Hyperbolic.tanh(x)
                 answer = answer.evalf(d)
                 print ('y =', answer)
@@ -126,6 +126,7 @@ class HyperbolicOperator:
 
 
 
+#inverse hyperbolic operators
 
 class InverseHyperbolic:
     def __init__ (self):
@@ -143,7 +144,7 @@ class InverseHyperbolic:
             if selection == hyperbolic_options.index(0):
                 print('Input y value ')
                 x = input('y = ')
-                d = Integer (input ('Accuracy(dcml places: '))
+                d = Integer (input ('Accuracy: '))
                 answer = function_formulas.Hyperbolic.asinh(Float(x))
                 answer = answer.evalf(d)
                 print ('x =', answer)
@@ -152,7 +153,7 @@ class InverseHyperbolic:
             if selection == hyperbolic_options.index(1):
                 print('Input y value ')
                 x = input('y = ')
-                d = Integer (input ('Accuracy(dcml places: '))
+                d = Integer (input ('Accuracy: '))
                 answer = function_formulas.Hyperbolic.acosh(Float(x))
                 answer = answer.evalf(d)
                 print ('x =', answer)
@@ -161,7 +162,7 @@ class InverseHyperbolic:
             if selection == hyperbolic_options.index(2):
                 print('Input y value ')
                 x = input('y = ')
-                d = Integer (input ('Accuracy(dcml places: '))
+                d = Integer (input ('Accuracy: '))
                 answer = function_formulas.Hyperbolic.atanh(Float(x))
                 answer = answer.evalf (d)
                 print ('x =', answer)
@@ -169,6 +170,43 @@ class InverseHyperbolic:
 
 
 
+#logarthimic Operators 
 
-#class LogarithmicOperators (self):
- #   def __init__ (self):
+class LogarithmicOperators:
+    def __init__ (self):
+
+        options = ['1 = base 10', '2 = natural', '3 = x y']
+        for x in options:
+            print (x)
+
+        options[0:] = range (3)
+
+        while attempt_count < attempt_limit:
+
+            selection = int(input('Log type: '))
+            selection = selection - 1
+
+            if selection == options.index(0):
+                x = Float(input('x = '))
+                d = Integer(input('Accuracy: '))
+                answer = function_formulas.Logarithmic.base10(x)
+                answer = answer.evalf(d)
+                print (answer)
+                break
+
+            if selection == options.index(1):
+                x = Float(input('x = '))
+                d = Integer(input('Accuracy: '))
+                answer = function_formulas.Logarithmic.natural(x)
+                answer = answer.evalf(d)
+                print (answer)
+                break
+
+            if selection == options.index(2):
+                x = input('b = ')
+                y = input('x = ')
+                d = Integer(input('Accuracy: '))
+                answer = function_formulas.Logarithmic.x_y(y, x)
+                answer = answer.evalf(d)
+                print(answer)
+                break
