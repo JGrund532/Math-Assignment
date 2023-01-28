@@ -1,11 +1,14 @@
 from sympy import *
 from mpmath import *
-import tools.fraction_to_float
 import function_formulas
+import matplotlib.pyplot as plt
+import numpy as np
+from sympy.plotting import plot 
+import sympy 
+
 
 attempt_count = 0
 attempt_limit = float('inf')
-
 
 
 #operator to run trig options form function opertors module 
@@ -209,4 +212,32 @@ class LogarithmicOperators:
                 answer = function_formulas.Logarithmic.x_y(y, x)
                 answer = answer.evalf(d)
                 print(answer)
+                break
+
+
+
+
+class Exponential:
+    def __init__ (self):
+
+        print ('f(x) = a^x')
+        print ('Type e for eulers')    
+        a = (input('a = '))
+        x = (input('x = '))
+        d = Integer (input ('Accuracy: '))
+
+        while attempt_count < attempt_limit:
+
+            if a.lower() == 'e':
+                answer = function_formulas.exponential.natural_exponential(Float(x))
+                answer = answer.evalf(d)
+                print(answer)
+                break
+
+            if a.lower() != 'e':        
+                answer = function_formulas.exponential.exponential(Float(a), Float(x))
+                answer = sympify (answer)
+                plot (answer)
+                answer = answer.evalf(d)
+                print (answer)
                 break

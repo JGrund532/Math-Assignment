@@ -60,6 +60,7 @@ class Hyperbolic:
             return atanh(x)
 
 
+#logarithmic 
 
 class Logarithmic: 
 
@@ -74,3 +75,16 @@ class Logarithmic:
         @staticmethod
         def x_y (x, y):
             return log(x, y)
+
+
+#expenential
+
+class exponential:
+
+    @staticmethod
+    def natural_exponential(x):
+        return exp (x)
+
+    @staticmethod
+    def exponential (a, x):
+        return (a**x)
