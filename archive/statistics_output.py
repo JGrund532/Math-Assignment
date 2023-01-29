@@ -7,8 +7,6 @@ import math
 class Data (object):
     def __init__ (self): 
     
-        attempt_limit = float("inf")
-        attempt_count = 0
 
     #selecting data set type for standard devaition
         selections = ["1 = population", "2 = sample"] 
@@ -20,10 +18,9 @@ class Data (object):
         selections[0] = 1
         selections[1] = 2
 
-        while attempt_count < attempt_limit: 
+        while True: 
             sample_type = int(input ("Population or sample? "))
             sample_type = sample_type - 1
-            attempt_count += 1
 
             if sample_type == selections.index(1):
                 break

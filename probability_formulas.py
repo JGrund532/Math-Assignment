@@ -6,9 +6,6 @@ import function_formulas
 import sympy
 from sympy import *
 
-attempt_count = 0
-attempt_limit = float('inf')
-
 
 class formulas (object):
 

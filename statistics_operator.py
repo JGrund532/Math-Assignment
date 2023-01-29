@@ -117,3 +117,9 @@ class VarianceS (object):
 
     def __float__ (self):
         return float(self.variance_s)
+
+
+
+     
+
+
