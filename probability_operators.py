@@ -3,7 +3,7 @@ from sympy import *
 import math
 import probability_formulas
 import test_2
-import statistics_operator
+import statistics_operator as so 
 
 
 class BinomialExpander (object):
@@ -47,21 +47,20 @@ class BinomialExpander (object):
 
 class NormalDistribution (object):
     def __init__ (self):
-      data_set = statistics_operator.Data()
+      data_set = so.Data()
       population_value = data_set.population
       x = float(input('x: ')) 
-      x = data_set.access_element(x)
 
 
       if population_value == True: 
-          stdev = statistics_operator.StdevP(data_set.data_set)
+          stdev = so.StdevP(data_set.data_set)
           stdev = float(stdev)
 
       elif population_value == False:
-          stdev = statistics_operator.StdevS(data_set.data_set)
+          stdev = so.StdevS(data_set.data_set)
           stdev = float(stdev)
 
-      mean = statistics_operator.Mean(data_set.data_set)
+      mean = so.Mean(data_set.data_set)
       mean = float(mean)
 
       self.z = (x - mean)/stdev
@@ -69,7 +68,3 @@ class NormalDistribution (object):
 
     def __float__ (self):
       return float(self.z)
-
-answer = NormalDistribution()
-
-print (float(answer))

@@ -1,89 +1,23 @@
-import sympy 
-from sympy import *
-import math
-import probability_formulas
-import test_2
-import statistics
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy.stats as stats
 
-class BinomialExpander (object):
-    def __init__ (self):
+class BellCurve:
+    def __init__(self, mu, sigma, z_score):
+        self.mu = mu
+        self.sigma = sigma
+        self.z_score = z_score
 
-        q, p, n = symbols('q p n')
+    def plot_c(self):
+        x = np.linspace(self.mu - 4 * self.sigma, self.mu + 4 * self.sigma, 100)
+        y = stats.norm.pdf(x, self.mu, self.sigma)
 
-        p = input ('Success (p): ')
-        print (f"{p}","%")        
-        p = Float(p)/100
+        plt.plot(x, y, '-b')
+        plt.fill_between(x, y, where=(x >= self.mu - self.z_score * self.sigma) & (x <= self.mu + self.z_score * self.sigma), color='red', alpha=0.5)
+        plt.title("Normal Bell Curve")
+        plt.xlabel("X")
+        plt.ylabel("Probability Density")
+        plt.show()
 
-        q = 1 - p
-        print ('Failure (q) = ', q)
-        q = Float(q)
-
-        print("sample size: ")
-        n = Integer(input('n: '))
-
-    #while loop to allow multiple attempts to re-evaluate w/ different values of r when r < n 
-        while True:
-              
-          print('Permutation value:')
-          r = Integer(input('r: '))
-
-          expansion = probability_formulas.formulas.binomial_expansion(q, p, n)            
-          expansion = str(expansion)
-          print (expansion)
-          expansion = expansion.split('+')
-
-          expansion = expansion[((int(r)*-1)-1)]
-          print (f'{expansion} = ', eval(expansion))
-
-
-       #breaks while loop if user no longer needs       
-          print("Revalue r? Type N to cancel, Y to go again")
-          go_again = input('')
-          if go_again.upper() == 'N':
-            break
-
-
-
-
-     
-class NormalDistribution (object):
-  def __init__ (self):
-    data_set = test_2.Data()
-    population_value = data_set.population
-    x = input('x: ')
-    x = float(x) 
-    x = data_set.access_element(x)
-
-
-    if population_value == True: 
-        stdev = test_2.StdevP(data_set.data_set)
-        stdev = float(stdev)
-
-    elif population_value == False:
-        stdev = test_2.StdevS(data_set.data_set)
-        stdev = float(stdev)
-
-    mean = test_2.Mean(data_set.data_set)
-    mean = float(mean)
-
-    self.z = (x - mean)/stdev
-
-  def __float__ (self):
-    return float(self.z)
-
-answer = NormalDistribution()
-
-answer = float(answer)
-
-print (answer)
-
-#class Mean (object):
- #   def __init__ (self, data_set):
-  #      self.mean = statistics.mean(data_set)
-    
-   # def __float__ (self):
-    #    return float(self.mean)
-    
-
-
-
+bell_curve = BellCurve(0, 1, 1.96)
+bell_curve.plot()

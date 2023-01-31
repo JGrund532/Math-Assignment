@@ -1,24 +1,47 @@
-import function_operators
-import statistics_operator
-import probability_operators
+"""
+
+Author: Josh Grundy 
+Date: 31/01/2023
+
+Description:
+To make completing a level 4 maths assignment easier w/ calculations and graph generation 
+
+[Additional Information about the Code and its Use]
+
+"""
+import function_operators as fo 
+import statistics_operator as so
+import probability_operators as po 
+import numpy as np 
+import matplotlib.pyplot as plt 
 
 
-def take_second(elem):
-    return elem[1]
 
-def take_third(elem):
-    return elem[2]
+class PlotBellCurve ():
+    def __init__ (self, z_score, x_bar, sigma):
+        self.z_score = z_score
+        self.x_bar = x_bar 
+        self.sigma = sigma
 
-def take_fourth(elem):
-    return elem[3]
+    def plot_a (self):
+        x = np.linspace((self.x_bar - (self.sigma*4)), (self.x_bar + (self.sigma*4)), 100)
+        y = (x, self.x_bar, self.sigma)
 
 
-class Answer (object):
-    def __init__ (self, answer):
-        self.answer = answer
+    def plot_b (self):
+        x = np.linspace((self.x_bar - (self.sigma*4)), (self.x_bar + (self.sigma*4)), 100)
+        y = (x, self.x_bar, self.sigma)
 
-    #def graph (self):
-     #   print 
+
+    def plot_c (self):
+        x = np.linspace((self.x_bar - (self.sigma*4)), (self.x_bar + (self.sigma*4)), 100)
+        y = (x, self.x_bar, self.sigma)
+
+
+    def plot_normal (self):
+        x = np.linspace((self.x_bar - (self.sigma*4)), (self.x_bar + (self.sigma*4)), 100)
+        y = (x, self.x_bar, self.sigma)
+
 
 
 #                           _________________________________________________________________________________________________________                        
@@ -27,114 +50,171 @@ class Answer (object):
 
 
 while True: 
-        
-    my_options = ["1 = Function Tool", "2 = Statistic Tool", "3 = Probability Tool", '4 = Quit']
 
-    for x in my_options:
-        print(x)
+    try:    
+        my_options = ["Function Tool", "Statistic Tool", "Probability Tool", 'Quit']
 
-    option_selection = int(input(""))
+        for index, option in enumerate (my_options, start = 1):
+            print(f'{index} = {option}')
 
-    my_options[:0] = range(4)
+        #for x in my_options: 
+         #   print(x)
 
-    option_selection = option_selection - 1
+        option_selection = int(input(""))
 
-    if option_selection == my_options.index(3):
-        break
+        #my_options[:0] = range (4)
 
+        #option_selection = option_selection - 1
 
-
-
-
-
-    #function selection type for index 0
-
-    if int(option_selection) == my_options.index(0):
-
-        while True:
-            try:
-                func_options = ["1 = Trigonometric", "2 = Hyperbolic", "3 = Logarithmic", "4 = Exponential"]
-
-                for x in func_options: 
-                    print (x) 
-
-                #converting option list elements to numbers for reference in input and while loop.  
-                func_options[0:] = range(4)
-
-                #user input 
-                func_select = int(input("Function type: " ))
-
-                func_select = func_select - 1 
-
-                if func_select == func_options.index(0):
-                    function_operators.TrigOperator()
-                    break
-
-                if func_select == func_options.index(1):
-                    
-                    hyperbolic_options = ['1 = Hyperbolic', '2 = Inverse hyperbolic']
-                    for x in hyperbolic_options: 
-                        print (x)
-
-                    hyperbolic_options[0:] = range(2)
-
-                    while True:
-                        try:
-                            selection = input('Function Type: ')
-                            selection = int(selection)
-                            selection = selection - 1
+        if option_selection == len(my_options) :
+            break
 
 
-                            if selection == hyperbolic_options.index(0):
-                                function_operators.HyperbolicOperator()
-                                break
 
-                            if selection == hyperbolic_options.index(1):
-                                function_operators.InverseHyperbolic()
-                                break
-                            
-                            if selection != hyperbolic_options.index(0) or hyperbolic_options.index(1):
-                                raise ValueError ('Error, enter a number 1 or 2 to select')
-                        except ValueError as e:
-                            print (e)
-                    break
 
-                if func_select == func_options.index(2):
-                    function_operators.LogarithmicOperators()
-                    break
+
+
+        #function selection type for index 0
+
+        if option_selection == 1:
+
+            while True:
+                try:
+                    func_options = ["Trigonometric", "Hyperbolic", "Logarithmic", "Exponential", 'Back']
+
+                    for index, option in enumerate(func_options, start = 1): 
+                        print (f'{index} = {option}') 
+
+                    #converting option list elements to numbers for reference in input and while loop.  
+                    #func_options[0:] = range(4)
+
+                    #user input 
+                    func_select = int(input("Function type: " ))
+
+                    #func_select = func_select - 1 
+
+                    if func_select == 1:
+                        fo.TrigOperator()
+                        break
+
+                    if func_select == 2:
                         
-                if func_select == func_options.index(3):
-                    function_operators.Exponential()
-                    break
+                        hyperbolic_options = ['Hyperbolic', 'Inverse hyperbolic', 'Back']
+                        for index, option in enumerate(hyperbolic_options, start = 1): 
+                            print (f'{index} = {option}')
 
-                    #while loop triggers if user input is invalid 
-                if func_select > 3:
-                    raise ValueError ('Error, enter number 1 - 4 to select')
+                        while True:
+                            try:
+                                selection = int(input('Function Type: '))
 
-            except ValueError as e:
-                print (e)
+                                if selection == 1:
+                                    fo.HyperbolicOperator()
+
+                                if selection == 2:
+                                    fo.InverseHyperbolic()
+
+                                if selection == len(hyperbolic_options):
+                                    break
+                                
+                                if selection < 1 or selection > len(hyperbolic_options):
+                                    raise ValueError (f'Enter number 1 - len{hyperbolic_options} to select')
+                            except ValueError as e:
+                                print (e)
+                        break
+
+                    if func_select == 3:
+                        fo.LogarithmicOperators()
+                        break
+                            
+                    if func_select == 4:
+                        fo.Exponential()
+                        break
+
+                    if func_select == len(func_options):
+                        break
+
+                        #while loop triggers if user input is invalid 
+                    if func_select < 1 or func_select > len(func_options):
+                        raise ValueError (f'Error, enter number 1 - {func_options} to select')
+
+                except ValueError as e:
+                    print (e)
+
+
+
+#statistics tool 
+
+        if option_selection == 2:
+
+            data = so.Data()
+            population_value = data.population
+
+            mean = so.Mean(data.data_set)
+            range = so.Range(data.data_set)
+            median = so.Median(data.data_set)
+            mode = so.Mode(data.data_set)
+
+            if population_value == True:
+                stdev = so.StdevP (data.data_set)
+                variance = so.VarianceP(data.data_set)
+                label = '(P)'
+
+            elif population_value == False:
+                stdev = so.StdevS (data.data_set)
+                variance = so.VarianceS (data.data_set)
+                label = '(S)'
+
+            calculations = [f'Mean: {float(mean)}', f'Range: {float(range)}', f'Median: {float(median)}', 
+                            f'Mode: {float(mode)}', f'Std deviation{label}: {float(stdev)}',
+                            f'Variance{label}: {float(variance)}']
+
+            for answers in calculations:
+                print(answers)
+
+
+
+
+#if user selects probabilty tool 
+
+        if option_selection == 3:     
+
+            while True:
+                try:
+                    prob_options = ['Binomial expander', 'Normal distribution', 'Back']
+
+                    for index, option in enumerate (prob_options, start = 1):
+                        print (f'{index} = {option}')
+                    
+                    answer = 0
+
+                    prob_select = int(input('Tool: '))
+
+                    if prob_select == len(prob_options):
+                        break 
+
+                    if prob_select == 1:
+                        po.BinomialExpander()
+                        print (float(answer))
+
+                    if prob_select == 2:
+                        answer = po.NormalDistribution()
+                        print (float(answer))
+                        Answer(answer)
+
+
+                    if prob_select > len(prob_options):
+                        raise ValueError (f'enter number 1 - {len(prob_options)}')
+                except ValueError as e:
+                    print (e)
+                    
+
+    
 
 
 
 
 
-
-
-
-
-
-
-    if int(option_selection) == my_options.index(1):
-        statistics_operator.Data()
-
-
-
-
-
-
-
-
-    #if user selects probabilty tool 
-
-    if int(option_selection) == my_options.index(2):     
-        probability_operators.BinomialExpander()
+        if option_selection < 1 or option_selection > len(my_options):
+            raise ValueError (f'Enter number 1 - {len(my_options)}') 
+    except ValueError as e:
+        print (e)
