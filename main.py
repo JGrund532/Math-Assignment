@@ -15,41 +15,71 @@ import probability_operators as po
 import numpy as np 
 import matplotlib.pyplot as plt 
 import scipy.stats as stats
+import math 
 
 
 
 
-class PlotBellCurve ():
-    def __init__ (self, z, x_bar, sigma):
+class PlotBellZPDF ():
+    def __init__ (self, z):
         self.z = z
-        self.x_bar = x_bar 
-        self.sigma = sigma
-
+        
     def plot_a (self):
-        x = np.linspace(self.x_bar-(4*self.sigma), self.x_bar + (4*self.sigma), 100)
-        y = stats.norm.pdf(x, self.x_bar, self.sigma)
-        plt.plot(x, y, 'r-')
-
+        inf = str(math.inf)
+        total = 1
+        x_bar = 0
+        sigma = math.sqrt(total)
+        x = np.linspace((0 - (sigma*3.49)),(0 + (sigma*3.49)), 100) 
+        y = stats.norm.pdf (x, x_bar, sigma)
+        plt.plot(x, y, 'r-', label = f'Z = {self.z}')
         plt.fill_between(x[x<self.z], y[x<self.z], 0, color='red', alpha = 0.3)
-        plt.title("Normal Distribution A")
+        plt.title(f"Normal Distribution Chart A (-{inf} - z)")
         plt.xlabel("Z Score")
         plt.ylabel("Probability Density")
         plt.legend(loc = 'upper left')
-
         plt.show()
 
 
     def plot_b (self):
-        x = np.linspace((self.x_bar - (self.sigma*4)), (self.x_bar + (self.sigma*4)), 100)
-        y = (x, self.x_bar, self.sigma)
+        inf = str(math.inf)
+        total = 1
+        x_bar = 0
+        sigma = math.sqrt(total)
+        x = np.linspace((0 - (sigma*3.49)),(0 + (sigma*3.49)), 100) 
+        y = stats.norm.pdf (x, x_bar, sigma)
+        plt.plot(x, y, 'r-')
+        plt.fill_between(x[x<self.z], y[x<self.z], 0, color='red', alpha = 0.3)
+        plt.title(f"Normal Distribution Chart B (-{inf} - {z})")
+        plt.xlabel("Z Score")
+        plt.ylabel("Probability Density")
+        plt.legend(loc = 'upper left')
+        plt.show()
 
 
-    def plot_c (self):
-        x = np.linspace((self.x_bar - (self.sigma*4)), (self.x_bar + (self.sigma*4)), 100)
-        y = (x, self.x_bar, self.sigma)
+def plot_c (self):
+        inf = str(math.inf)
+        total = 1
+        x_bar = 0
+        sigma = math.sqrt(total)
+        x = np.linspace((0 - (sigma*3.49)),(0 + (sigma*3.49)), 100) 
+        y = stats.norm.pdf (x, x_bar, sigma)
+        plt.plot(x, y, 'r-')
+        plt.fill_between(x[x>self.z], y[x>self.z], 0, color='red', alpha = 0.3)
+        plt.title(f"Normal Distribution Chart A (mean - {z})")
+        plt.xlabel("Z Score")
+        plt.ylabel("Probability Density")
+        plt.legend(loc = 'upper left')
+        plt.show()
 
 
-    def plot_bell (self):
+
+
+
+class BellChart ():
+    def __init__ (self, x_bar, sigma):
+        self.x_bar = x_bar
+        self.sigma = sigma 
+
         x = np.linspace((self.x_bar - (self.sigma*4)), (self.x_bar + (self.sigma*4)), 100)
         y = (x, self.x_bar, self.sigma)
 
@@ -146,7 +176,7 @@ while True:
 
         if option_selection == 2:
 
-            data = so.Data()
+            data = so.DataContinuous()
             population_value = data.population
 
             mean = so.Mean(data.data_set)
@@ -197,14 +227,25 @@ while True:
                         print (float(answer))
 
                     if prob_select == 2:
-                        answer = po.NormalDistribution()
-                        z = answer.z
-                        mean = answer.mean
-                        stdev = answer.stdev
-                        x = answer.x
+                        while True: 
+                            try:
+                                set_type = ['Discrete', 'Continuous' ]
 
-                        answer = PlotBellCurve(z, mean, stdev)
-                        answer.plot_a()
+                                for index, option in enumerate(set_type):
+                                    print (f'{index} = {option}')
+
+                                    type_select = int(input('Data type: ')) 
+
+                                    if type_select == 1:
+
+                        #answer = po.NormalDistribution()
+                        #z = answer.z
+                        #mean = answer.mean
+                        #stdev = answer.stdev
+                        #x = answer.x
+
+                        #answer = PlotBellZPDF(z)
+                        #answer.plot_a()
 
 
                     if prob_select > len(prob_options):
