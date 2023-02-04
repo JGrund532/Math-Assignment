@@ -14,18 +14,29 @@ import statistics_operator as so
 import probability_operators as po 
 import numpy as np 
 import matplotlib.pyplot as plt 
+import scipy.stats as stats
+
 
 
 
 class PlotBellCurve ():
-    def __init__ (self, z_score, x_bar, sigma):
-        self.z_score = z_score
+    def __init__ (self, z, x_bar, sigma):
+        self.z = z
         self.x_bar = x_bar 
         self.sigma = sigma
 
     def plot_a (self):
-        x = np.linspace((self.x_bar - (self.sigma*4)), (self.x_bar + (self.sigma*4)), 100)
-        y = (x, self.x_bar, self.sigma)
+        x = np.linspace(self.x_bar-(4*self.sigma), self.x_bar + (4*self.sigma), 100)
+        y = stats.norm.pdf(x, self.x_bar, self.sigma)
+        plt.plot(x, y, 'r-')
+
+        plt.fill_between(x[x<self.z], y[x<self.z], 0, color='red', alpha = 0.3)
+        plt.title("Normal Distribution A")
+        plt.xlabel("Z Score")
+        plt.ylabel("Probability Density")
+        plt.legend(loc = 'upper left')
+
+        plt.show()
 
 
     def plot_b (self):
@@ -38,10 +49,9 @@ class PlotBellCurve ():
         y = (x, self.x_bar, self.sigma)
 
 
-    def plot_normal (self):
+    def plot_bell (self):
         x = np.linspace((self.x_bar - (self.sigma*4)), (self.x_bar + (self.sigma*4)), 100)
         y = (x, self.x_bar, self.sigma)
-
 
 
 #                           _________________________________________________________________________________________________________                        
@@ -57,21 +67,11 @@ while True:
         for index, option in enumerate (my_options, start = 1):
             print(f'{index} = {option}')
 
-        #for x in my_options: 
-         #   print(x)
-
         option_selection = int(input(""))
 
-        #my_options[:0] = range (4)
-
-        #option_selection = option_selection - 1
 
         if option_selection == len(my_options) :
             break
-
-
-
-
 
 
         #function selection type for index 0
@@ -198,8 +198,13 @@ while True:
 
                     if prob_select == 2:
                         answer = po.NormalDistribution()
-                        print (float(answer))
-                        Answer(answer)
+                        z = answer.z
+                        mean = answer.mean
+                        stdev = answer.stdev
+                        x = answer.x
+
+                        answer = PlotBellCurve(z, mean, stdev)
+                        answer.plot_a()
 
 
                     if prob_select > len(prob_options):
@@ -209,9 +214,6 @@ while True:
                     
 
     
-
-
-
 
 
         if option_selection < 1 or option_selection > len(my_options):

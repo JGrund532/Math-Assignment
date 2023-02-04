@@ -2,6 +2,7 @@ import statistics
 import tools.fraction_to_float
 import function_formulas
 import math 
+from sympy import *
 
 
 
@@ -41,7 +42,8 @@ class Data (list):
         print("\n")  
         for i in range(0, n): 
             print("Enter element ", i + 1 , )
-            item = float(input()) #user input  
+            item = (input())
+            item = float(eval(item))
             data_set.append(item) 
         
         print("Data set: ", data_set)
@@ -49,7 +51,7 @@ class Data (list):
         self.data_set = data_set                  #passes the list generated back to self so it can be accessed from other classes
 
 
-    def access_element (self, x):                 #creates a method to acess elements in the genrated list above
+    def index (self, x):                 #creates a method to acess elements in the genrated list above
             return self.data_set.index(x)
 
 

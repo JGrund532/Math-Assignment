@@ -1,10 +1,8 @@
-import sympy 
 from sympy import *
 import math
 import probability_formulas
-import test_2
 import statistics_operator as so 
-
+import scipy as stats 
 
 class BinomialExpander (object):
     def __init__ (self):
@@ -38,7 +36,7 @@ class BinomialExpander (object):
 
 
        #breaks while loop if user no longer needs       
-          print("Revalue r? Type N to cancel, Y to go again")
+          print("Re-evaluate r? Y/N")
           go_again = input('')
           if go_again.upper() == 'N':
             break
@@ -63,7 +61,10 @@ class NormalDistribution (object):
       mean = so.Mean(data_set.data_set)
       mean = float(mean)
 
+      self.stdev = stdev 
+      self.mean = mean
       self.z = (x - mean)/stdev
+      self.x = x
 
 
     def __float__ (self):

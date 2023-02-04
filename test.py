@@ -1,23 +1,27 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import scipy.stats as stats
+from scipy import stats
 
-class BellCurve:
-    def __init__(self, mu, sigma, z_score):
-        self.mu = mu
-        self.sigma = sigma
-        self.z_score = z_score
+# Generate sample data
+np.random.seed(0)
+data = np.random.normal(loc=50, scale=10, size=100)
 
-    def plot_c(self):
-        x = np.linspace(self.mu - 4 * self.sigma, self.mu + 4 * self.sigma, 100)
-        y = stats.norm.pdf(x, self.mu, self.sigma)
+# Calculate z-scores
+zscores = stats.zscore(data)
 
-        plt.plot(x, y, '-b')
-        plt.fill_between(x, y, where=(x >= self.mu - self.z_score * self.sigma) & (x <= self.mu + self.z_score * self.sigma), color='red', alpha=0.5)
-        plt.title("Normal Bell Curve")
-        plt.xlabel("X")
-        plt.ylabel("Probability Density")
-        plt.show()
+# Plot the normal distribution curve
+mu = 0
+sigma = 1
+x = np.linspace(-4, 4, 100)
+y = stats.norm.pdf(x, mu, sigma)
+plt.plot(x, y, 'r-', label='normal distribution')
 
-bell_curve = BellCurve(0, 1, 1.96)
-bell_curve.plot()
+# Fill the area under the curve from minus infinity to the calculated z-score
+z = zscores[0]
+plt.fill_between(x[x<z], y[x<z], 0, color='red', alpha=0.3)
+
+plt.title("Normal Distribution Curve")
+plt.xlabel("Z-Score")
+plt.ylabel("Density")
+plt.legend()
+plt.show()
