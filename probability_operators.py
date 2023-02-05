@@ -32,8 +32,9 @@ class BinomialExpander (object):
           expansion = expansion.split('+')
 
           expansion = expansion[((int(r)*-1)-1)]
-          print (f'{expansion} = ', eval(expansion))
-
+          answer = f'{expansion} = {eval(expansion)}'
+          print (answer)
+          self.answer = answer
 
        #breaks while loop if user no longer needs       
           print("Re-evaluate r? Y/N")
@@ -45,7 +46,7 @@ class BinomialExpander (object):
 
 class NormalDistribution (object):
     def __init__ (self):
-      data_set = so.Data()
+      data_set = so.DataContinuous()
       population_value = data_set.population
       x = float(input('x: ')) 
 

@@ -57,7 +57,6 @@ class PlotBellZPDF ():
 
 
 def plot_c (self):
-        inf = str(math.inf)
         total = 1
         x_bar = 0
         sigma = math.sqrt(total)
@@ -82,6 +81,7 @@ class BellChart ():
 
         x = np.linspace((self.x_bar - (self.sigma*4)), (self.x_bar + (self.sigma*4)), 100)
         y = (x, self.x_bar, self.sigma)
+        plt.plot(x, y, '-r')
 
 
 #                           _________________________________________________________________________________________________________                        
@@ -115,13 +115,7 @@ while True:
                     for index, option in enumerate(func_options, start = 1): 
                         print (f'{index} = {option}') 
 
-                    #converting option list elements to numbers for reference in input and while loop.  
-                    #func_options[0:] = range(4)
-
-                    #user input 
                     func_select = int(input("Function type: " ))
-
-                    #func_select = func_select - 1 
 
                     if func_select == 1:
                         fo.TrigOperator()
@@ -226,26 +220,39 @@ while True:
                         po.BinomialExpander()
                         print (float(answer))
 
+                #selecting whether data is continuous or discrete
                     if prob_select == 2:
                         while True: 
                             try:
                                 set_type = ['Discrete', 'Continuous' ]
 
-                                for index, option in enumerate(set_type):
+                                for index, option in enumerate(set_type, start = 1):
                                     print (f'{index} = {option}')
 
                                     type_select = int(input('Data type: ')) 
 
                                     if type_select == 1:
+                                        break
 
-                        #answer = po.NormalDistribution()
-                        #z = answer.z
-                        #mean = answer.mean
-                        #stdev = answer.stdev
-                        #x = answer.x
+                                    if type_select == 2:
+                                        break
+                                    
+                                    if type_select < 1 or type_select > len(set_type):
+                                        raise ValueError (f'Select 1 - {len(set_type)}')
 
-                        #answer = PlotBellZPDF(z)
-                        #answer.plot_a()
+                            except ValueError as e: 
+                                print (e)
+
+
+
+                     #   answer = po.NormalDistribution()
+                      #  z = answer.z
+                       # mean = answer.mean
+                       # stdev = answer.stdev
+                       # x = answer.x
+
+                     ##   answer = PlotBellZPDF(z)
+                       # answer.plot_a()
 
 
                     if prob_select > len(prob_options):
