@@ -13,6 +13,14 @@ class Mean (object):
     
     def __float__ (self):
         return float(self.mean)
+    
+
+class MeanDiscrete():
+    def __init__ (self, sum_fx, f):
+        self.mean = sum_fx/f
+
+    def __float__ (self):
+        return float(self.mean)
 
 
 class Range (object):
@@ -111,39 +119,37 @@ class DataDiscrete (list):
 
         print("\n")  
         for i in range(0, n): 
-            print(f"{class_valuelower} - {class_valueupper} frequency: ", i + 1 , )
+            print(f"{class_valuelower} - {class_valueupper} frequency: ", )
             item = (input())
             item = int(eval(item))
             frequency.append(item) 
             classes.append (f'{class_valuelower} - {class_valueupper}')
-            class_valuelower = class_valuelower + class_jump
-            class_valueupper = class_valueupper + class_jump
+            class_valuelower = class_valuelower + class_jump 
+            class_valueupper = class_valueupper + class_jump #Calculating the size of each class
 
         print ('Data classes: ', classes)
         print("Frequency: ", frequency)        
-        self.classes = classes  
-        self.frequency = frequency  
-        
-        while True:
-            try: 
-                print ('Create data frame? Y/N')
-                input_df = input('')
-                if input_df.upper() == 'Y':    
-                    data = {'class': classes, 'frequency': frequency }
-                    df = pd.DataFrame(data)
-                    self.df = df 
-                    break
-
-                if input_df.upper() == 'N':
-                    break
-                
-                if input_df.upper() != 'Y' or input_df.upper != 'N':
-                    raise TypeError('Enter Y or N')
-
-            except TypeError as e: 
-                print (e) 
-
      
+        data = {'BIN': classes, 'frequency': frequency }
+        df = pd.DataFrame(data)
+
+
+        self.df = df 
+        self.classes = classes  
+        self.frequency = frequency
+       
+
+        #generating a list of the class midpoints for use in calculations 
+    def get_midpoints(self):
+        midpoints = []
+        for class_interval in self.classes:
+            lower, upper = map(float, class_interval.split('-'))
+
+            midpoint = (lower + upper)/2
+            midpoints.append(midpoint) 
+
+        return midpoints 
+
 
 
 
@@ -155,14 +161,13 @@ class DataContinuous (list):
         self.population = True
 
     #selecting data set type for standard devaition
-        selections = ["1 = population", "2 = sample"] 
+        selections = ["population", "sample"] 
 
         for index, option in enumerate(selections, start = 1):
             print (f'{index} = {option}')
 
         while True: 
             sample_type = int(input ("Population or sample? "))
-            sample_type = sample_type - 1
 
             if sample_type == 1: 
                 type = 'population'

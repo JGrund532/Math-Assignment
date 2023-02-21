@@ -11,7 +11,8 @@ To make completing a level 4 maths assignment easier w/ calculations and graph g
 """
 import function_operators as fo 
 import statistics_operator as so
-import probability_operators as po 
+import probability_operators as po
+import probability_formulas as pf 
 import numpy as np 
 import matplotlib.pyplot as plt 
 import scipy.stats as stats
@@ -20,19 +21,27 @@ import math
 
 
 
+
 class PlotBellZPDF ():
     def __init__ (self, z):
         self.z = z
-        
-    def plot_a (self):
+
+
+    def plot_a (self, x_value, mean):
         inf = str(math.inf)
         total = 1
-        x_bar = 0
+        mu = 0
         sigma = math.sqrt(total)
         x = np.linspace((0 - (sigma*3.49)),(0 + (sigma*3.49)), 100) 
-        y = stats.norm.pdf (x, x_bar, sigma)
+        y = stats.norm.pdf (x, mu, sigma)
         plt.plot(x, y, 'r-', label = f'Z = {self.z}')
-        plt.fill_between(x[x<self.z], y[x<self.z], 0, color='red', alpha = 0.3)
+        if x_value > mean:
+            plt.fill_between(x[x>self.z], y[x>self.z], 0, color='red', alpha = 0.3)
+        
+        elif x_value < mean:
+            plt.fill_between(x[x<self.z], y[x<self.z], 0, color='red', alpha = 0.3)
+        
+            
         plt.title(f"Normal Distribution Chart A (-{inf} - z)")
         plt.xlabel("Z Score")
         plt.ylabel("Probability Density")
@@ -47,24 +56,24 @@ class PlotBellZPDF ():
         sigma = math.sqrt(total)
         x = np.linspace((0 - (sigma*3.49)),(0 + (sigma*3.49)), 100) 
         y = stats.norm.pdf (x, x_bar, sigma)
-        plt.plot(x, y, 'r-')
+        plt.plot(x, y, 'r-', label = f'Z = {self.z}')
         plt.fill_between(x[x<self.z], y[x<self.z], 0, color='red', alpha = 0.3)
-        plt.title(f"Normal Distribution Chart B (-{inf} - {z})")
+        plt.title(f"Normal Distribution Chart B (-{inf} - z)")
         plt.xlabel("Z Score")
         plt.ylabel("Probability Density")
         plt.legend(loc = 'upper left')
         plt.show()
 
 
-def plot_c (self):
+    def plot_c (self):
         total = 1
         x_bar = 0
         sigma = math.sqrt(total)
         x = np.linspace((0 - (sigma*3.49)),(0 + (sigma*3.49)), 100) 
         y = stats.norm.pdf (x, x_bar, sigma)
-        plt.plot(x, y, 'r-')
+        plt.plot(x, y, 'r-', label = f'Z = {self.z}')
         plt.fill_between(x[x>self.z], y[x>self.z], 0, color='red', alpha = 0.3)
-        plt.title(f"Normal Distribution Chart A (mean - {z})")
+        plt.title(f"Normal Distribution Chart C (mean - z)")
         plt.xlabel("Z Score")
         plt.ylabel("Probability Density")
         plt.legend(loc = 'upper left')
@@ -104,7 +113,14 @@ while True:
             break
 
 
-        #function selection type for index 0
+
+
+
+
+
+
+
+#running function slelection
 
         if option_selection == 1:
 
@@ -166,34 +182,62 @@ while True:
 
 
 
+
+
+
+
+
+
 #statistics tool 
 
         if option_selection == 2:
 
-            data = so.DataContinuous()
-            population_value = data.population
+            stat_options = ['Continuous', 'Discrete']
+            
+            for index, option in enumerate(stat_options, start = 1):
+                print (f'{index} = {option}')
 
-            mean = so.Mean(data.data_set)
-            range = so.Range(data.data_set)
-            median = so.Median(data.data_set)
-            mode = so.Mode(data.data_set)
+            stat_select = int(input('Data type: '))
 
-            if population_value == True:
-                stdev = so.StdevP (data.data_set)
-                variance = so.VarianceP(data.data_set)
-                label = '(P)'
+            if stat_select == 1: 
+                    
+                data = so.DataContinuous()
+                population_value = data.population
 
-            elif population_value == False:
-                stdev = so.StdevS (data.data_set)
-                variance = so.VarianceS (data.data_set)
-                label = '(S)'
+                mean = so.Mean(data.data_set)
+                _range = so.Range(data.data_set)
+                median = so.Median(data.data_set)
+                mode = so.Mode(data.data_set)
 
-            calculations = [f'Mean: {float(mean)}', f'Range: {float(range)}', f'Median: {float(median)}', 
+                if population_value == True:
+                    stdev = so.StdevP (data.data_set)
+                    variance = so.VarianceP(data.data_set)
+                    label = '(P)'
+
+                elif population_value == False:
+                    stdev = so.StdevS (data.data_set)
+                    variance = so.VarianceS (data.data_set)
+                    label = '(S)'
+
+
+                if stat_select == 2:
+
+                    data = so.DataDiscrete()
+                    population_value = data.population
+
+
+
+            calculations = [f'Mean: {float(mean)}', f'Range: {float(_range)}', f'Median: {float(median)}', 
                             f'Mode: {float(mode)}', f'Std deviation{label}: {float(stdev)}',
                             f'Variance{label}: {float(variance)}']
 
             for answers in calculations:
                 print(answers)
+
+
+
+
+
 
 
 
@@ -224,35 +268,70 @@ while True:
                     if prob_select == 2:
                         while True: 
                             try:
-                                set_type = ['Discrete', 'Continuous' ]
+                                set_type = ['Discrete', 'Continuous', 'Back' ]
 
                                 for index, option in enumerate(set_type, start = 1):
                                     print (f'{index} = {option}')
 
-                                    type_select = int(input('Data type: ')) 
+                                type_select = int(input('Data type: ')) 
+                                
+                                population_value = None
+                                mean = None
 
-                                    if type_select == 1:
-                                        break
 
-                                    if type_select == 2:
-                                        break
+                        #if discrete data is selected 
+                                if type_select == 1:
+
+                                    data = so.DataDiscrete()
+                                    population_value = data.population
+                                    frequency = data.frequency 
+                                    midpoints = data.get_midpoints()
+
+                            #generating a list to alculate the mean 
+                                    sum_fx = []
+                                    for i in range(len(frequency)):
+                                        sum_fx.append(midpoints[i] * frequency[i])
+                                    mean = so.MeanDiscrete(sum(sum_fx), sum(frequency))
+                                    mean = float(mean)
+
+
+                            #plot graph after generating z score via PO module 
+                                while True:
+                                    try:                                        
+                                        run = po.NormalDistribution(population_value)
+                                        run.discrete(frequency, mean, midpoints)
+                                        z = run.z
+                                        x = run.x
+                                        graph = PlotBellZPDF(z)
+                                        graph.plot_a(x, mean)
+                                        print ('Revaluate x? Y/N')
+                                        go_again = input ('')
+                                        if go_again.upper() == 'N': 
+                                            break
+
+                                        if go_again.upper() != 'Y':
+                                            raise TypeError(f'Enter Y/N')
+                                        
+                                    except TypeError as e:
+                                        print (e)
+
+
+                        #if continuous data is selected 
+                                if type_select == 2: 
+                                    data = so.DataContinuous()
+                                    print ()
+                                    break
+
+                                if type_select == 3:
+                                    break
                                     
-                                    if type_select < 1 or type_select > len(set_type):
-                                        raise ValueError (f'Select 1 - {len(set_type)}')
+
+                        #type error if invalid input 
+                                if type_select < 1 or type_select > len(set_type):
+                                    raise ValueError (f'Select 1 - {len(set_type)}')
 
                             except ValueError as e: 
                                 print (e)
-
-
-
-                     #   answer = po.NormalDistribution()
-                      #  z = answer.z
-                       # mean = answer.mean
-                       # stdev = answer.stdev
-                       # x = answer.x
-
-                     ##   answer = PlotBellZPDF(z)
-                       # answer.plot_a()
 
 
                     if prob_select > len(prob_options):
@@ -262,6 +341,10 @@ while True:
                     
 
     
+
+
+
+
 
 
         if option_selection < 1 or option_selection > len(my_options):

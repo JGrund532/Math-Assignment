@@ -5,7 +5,7 @@ import numpy as np
 import function_formulas
 import sympy
 from sympy import *
-
+import scipy as stats 
 
 class formulas (object):
 
@@ -26,5 +26,10 @@ class formulas (object):
             q, p = sympy.symbols ("q p")
             formula = (q + p)**n
             return formula.expand()
+        
+        @staticmethod
+        def z_score (x, mean, stdev):
+             formula = (x - mean)/stdev 
+             return formula 
 
 

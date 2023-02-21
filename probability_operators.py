@@ -1,6 +1,6 @@
 from sympy import *
 import math
-import probability_formulas
+import probability_formulas as pf
 import statistics_operator as so 
 import scipy as stats 
 
@@ -26,7 +26,7 @@ class BinomialExpander (object):
           print('Permutation value:')
           r = Integer(input('r: '))
 
-          expansion = probability_formulas.formulas.binomial_expansion(q, p, n)            
+          expansion = pf.formulas.binomial_expansion(q, p, n)            
           expansion = str(expansion)
           print (expansion)
           expansion = expansion.split('+')
@@ -44,29 +44,31 @@ class BinomialExpander (object):
 
 
 
-class NormalDistribution (object):
-    def __init__ (self):
-      data_set = so.DataContinuous()
-      population_value = data_set.population
-      x = float(input('x: ')) 
+class NormalDistribution ():
+    def __init__ (self, population_value):
+      self.population_value = population_value
+
+    def discrete (self, frequency, mean, midpoints):
 
 
-      if population_value == True: 
-          stdev = so.StdevP(data_set.data_set)
-          stdev = float(stdev)
+    #calculating STDEV via variance dependant on population value of sample or population
+        if self.population_value == True:
+            variance = sum(frequency[i] * (midpoints[i] - mean) ** 2 for i in range(len(midpoints))) / sum(frequency)
+            stdev = math.sqrt(variance)
 
-      elif population_value == False:
-          stdev = so.StdevS(data_set.data_set)
-          stdev = float(stdev)
+        if self.population_value == False: 
+            variance = sum(frequency[i] * (midpoints[i] - mean) ** 2 for i in range(len(midpoints))) / sum(frequency) - 1
+            stdev = math.sqrt(variance)
 
-      mean = so.Mean(data_set.data_set)
-      mean = float(mean)
+        stdev = float(stdev)
+        mean = float(mean)
+        print(mean)
+        print(stdev)
+        x = float(input('x value: '))
+        z = pf.formulas.z_score(x, mean, stdev)
 
-      self.stdev = stdev 
-      self.mean = mean
-      self.z = (x - mean)/stdev
-      self.x = x
+        self.z = z
+        self.x = x
+        self.mean = mean 
 
-
-    def __float__ (self):
-      return float(self.z)
+    
