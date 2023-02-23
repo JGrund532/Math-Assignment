@@ -48,17 +48,8 @@ class NormalDistribution ():
     def __init__ (self, population_value):
       self.population_value = population_value
 
-    def discrete (self, frequency, mean, midpoints):
+    def discrete (self, frequency, mean, midpoints, stdev):
 
-
-    #calculating STDEV via variance dependant on population value of sample or population
-        if self.population_value == True:
-            variance = sum(frequency[i] * (midpoints[i] - mean) ** 2 for i in range(len(midpoints))) / sum(frequency)
-            stdev = math.sqrt(variance)
-
-        if self.population_value == False: 
-            variance = sum(frequency[i] * (midpoints[i] - mean) ** 2 for i in range(len(midpoints))) / sum(frequency) - 1
-            stdev = math.sqrt(variance)
 
         stdev = float(stdev)
         mean = float(mean)
@@ -71,4 +62,9 @@ class NormalDistribution ():
         self.x = x
         self.mean = mean 
 
-    
+
+class Significance ():
+   def __init__ (self, mean):
+      
+
+      pass

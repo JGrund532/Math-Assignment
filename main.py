@@ -12,7 +12,6 @@ To make completing a level 4 maths assignment easier w/ calculations and graph g
 import function_operators as fo 
 import statistics_operator as so
 import probability_operators as po
-import probability_formulas as pf 
 import numpy as np 
 import matplotlib.pyplot as plt 
 import scipy.stats as stats
@@ -25,30 +24,54 @@ import math
 class PlotBellZPDF ():
     def __init__ (self, z):
         self.z = z
+        self.fig, self.ax = plt.subplots() 
 
 
-    def plot_a (self, x_value, mean):
+    def plot_a (self, x_value, mean, z_alpha = None):
         inf = str(math.inf)
         total = 1
         mu = 0
         sigma = math.sqrt(total)
         x = np.linspace((0 - (sigma*3.49)),(0 + (sigma*3.49)), 100) 
         y = stats.norm.pdf (x, mu, sigma)
-        plt.plot(x, y, 'r-', label = f'Z = {self.z}')
+        self.ax.plot(x, y, 'r-', label = f'Z = {self.z}')
+
+
+     #configuring which side of the bell curve needs to be shaded    
         if x_value > mean:
-            plt.fill_between(x[x>self.z], y[x>self.z], 0, color='red', alpha = 0.3)
+            self.ax.fill_between(x[x>self.z], 
+                                 y[x>self.z], 
+                                 0, color='red', alpha = 0.3)
+            self.ax.annotate ('z score', xy = (self.z,0), xytext = ((self.z + 1), 0.3), 
+                            arrowprops=dict(facecolor='black', shrink=0.05))
         
         elif x_value < mean:
-            plt.fill_between(x[x<self.z], y[x<self.z], 0, color='red', alpha = 0.3)
-        
+            self.ax.fill_between(x[x<self.z], 
+                                 y[x<self.z], 
+                                 0, color='red', alpha = 0.3)
+            self.ax.annotate ('z score', xy = (self.z,0), xytext = ((self.z - 1), 0.3), 
+                    arrowprops=dict(facecolor='black', shrink=0.05))
             
-        plt.title(f"Normal Distribution Chart A (-{inf} - z)")
-        plt.xlabel("Z Score")
-        plt.ylabel("Probability Density")
-        plt.legend(loc = 'upper left')
+
+    #if using significance then will indicate where alpha is in the x axis compared to z
+        if z_alpha is not None and x_value > mean: 
+            self.ax.annotate ('\u03B1', xy = (z_alpha,0), xytext = ((z_alpha - 1), 0.3), 
+                            arrowprops=dict(facecolor='black', shrink=0.05))
+            
+        if z_alpha is not None and x_value < mean: 
+            self.ax.annotate ('\u03B1', xy = (z_alpha,0), xytext = ((z_alpha + 1), 0.3), 
+                            arrowprops=dict(facecolor='black', shrink=0.05))
+            
+
+        self.ax.set_title(f"Normal Distribution Chart A (-{inf} - z)")
+        self.ax.set_xlabel("Z Score")
+        self.ax.set_ylabel("Probability Density")
+        self.ax.legend(loc = 'upper left')
         plt.show()
 
 
+    
+        
     def plot_b (self):
         inf = str(math.inf)
         total = 1
@@ -83,6 +106,10 @@ class PlotBellZPDF ():
 
 
 
+
+
+
+
 class BellChart ():
     def __init__ (self, x_bar, sigma):
         self.x_bar = x_bar
@@ -91,6 +118,25 @@ class BellChart ():
         x = np.linspace((self.x_bar - (self.sigma*4)), (self.x_bar + (self.sigma*4)), 100)
         y = (x, self.x_bar, self.sigma)
         plt.plot(x, y, '-r')
+
+
+
+
+
+
+
+
+
+class Histogram():
+    def __init__ (self, bins, frequency):
+        self.bins = bins 
+        self.frequency = frequency
+
+        def without_bell (self):
+            plt.hist(frequency, bins = bins)
+            plt.show()
+
+        
 
 
 #                           _________________________________________________________________________________________________________                        
@@ -109,6 +155,7 @@ while True:
         option_selection = int(input(""))
 
 
+    #allows the user to quit program
         if option_selection == len(my_options) :
             break
 
@@ -119,7 +166,7 @@ while True:
 
 
 
-
+#_______________________________________________________________________________________________________________________________________
 #running function slelection
 
         if option_selection == 1:
@@ -187,7 +234,7 @@ while True:
 
 
 
-
+#_______________________________________________________________________________________________________________________________________
 #statistics tool 
 
         if option_selection == 2:
@@ -204,46 +251,136 @@ while True:
                 data = so.DataContinuous()
                 population_value = data.population
 
-                mean = so.Mean(data.data_set)
-                _range = so.Range(data.data_set)
-                median = so.Median(data.data_set)
-                mode = so.Mode(data.data_set)
+                mean = so.Formulas.mean(data.data_set)
+                _range = so.Formulas.range(data.data_set)
+                median = so.Formulas.median(data.data_set)
+                mode = so.Formulas.mode(data.data_set)
 
                 if population_value == True:
-                    stdev = so.StdevP (data.data_set)
-                    variance = so.VarianceP(data.data_set)
+                    stdev = so.Formulas.stdevP (data.data_set)
+                    variance = so.Formulas.varianceP(data.data_set)
                     label = '(P)'
 
                 elif population_value == False:
-                    stdev = so.StdevS (data.data_set)
-                    variance = so.VarianceS (data.data_set)
+                    stdev = so.Formulas.stdevS (data.data_set)
+                    variance = so.Formulas.varianceS (data.data_set)
                     label = '(S)'
 
+                calculations_c = [f'Mean: {float(mean)}', f'Range: {float(_range)}', f'Median: {float(median)}', 
+                                f'Mode: {float(mode)}', f'Std deviation{label}: {float(stdev)}',
+                                f'Variance{label}: {float(variance)}']
 
-                if stat_select == 2:
+                for answers in calculations_c:
+                    print(answers)
 
-                    data = so.DataDiscrete()
+
+
+
+            if stat_select == 2:
+
+                discrete_options = ['Quantitative', 'Catagorical']
+
+                for index, option in enumerate (discrete_options, start = 1):
+                    print (f'{index} = {option}') 
+
+                discrete_select = int(input('Discrete data type: '))
+
+                if discrete_select == 1:
+                    data = so.DataDiscreteQ()
                     population_value = data.population
+                    print (data.df)
+                    population_value = data.population
+                    frequency = data.frequency 
+                    midpoints = data.get_midpoints()
+
+                #generating a list to calculate the mean 
+                    sum_fx = []
+                    for i in range(len(frequency)):
+                        sum_fx.append(midpoints[i] * frequency[i])
+                    mean = so.DiscreteFormulas.mean(sum_fx,frequency)
+                    mean = float(mean)
+                
+                #calculating stdev using the correct formula based on whether a population or sample is being used
+                    if population_value == True: 
+                        stdev = so.DiscreteFormulas.stdevP(frequency, midpoints, mean)
+
+                    if population_value == False:
+                        stdev = so.DiscreteFormulas.stdevS(frequency, midpoints, mean)
+
+
+            #probabilty tool activated if needed
+                print('Calculate statistcal probabilty? Y/N')
+
+                sprob_calc = input('')
+
+                if sprob_calc.upper() == 'Y':
+
+                    sprob_options = ['Z Score Calc', 'Significance Testing', 'Back']
+
+                    for index, option in enumerate (sprob_options, start = 1):
+                        print (f'{index} = {option}')   
+
+                    sprob_select = int(input (''))
+
+                #calculating z score and plotting bell graph 
+                    if sprob_select == 1:
+                        while True:
+                            try:                                        
+                                run = po.NormalDistribution(population_value)
+                                run.discrete(frequency, mean, midpoints, stdev)
+                                z = run.z
+                                x = run.x
+                                
+                                graph = PlotBellZPDF(z)
+                                graph.plot_a(x, mean)
+                                
+                                print ('Revaluate x? Y/N')
+                                go_again = input ('')
+                                if go_again.upper() == 'N': 
+                                    break
+
+                                if go_again.upper() != 'Y':
+                                    raise TypeError(f'Enter Y/N')                
+                            except TypeError as e:
+                                print (e)
 
 
 
-            calculations = [f'Mean: {float(mean)}', f'Range: {float(_range)}', f'Median: {float(median)}', 
-                            f'Mode: {float(mode)}', f'Std deviation{label}: {float(stdev)}',
-                            f'Variance{label}: {float(variance)}']
+                #claculating significance level and plotting a bell chart to graphically represent 
+                    if sprob_select == 2:
 
-            for answers in calculations:
-                print(answers)
+                        alpha = float(input('Significance level (\u03B1): '))
+                        tail_options = ['Single', 'Double']
+
+                        for index, option in enumerate (tail_options, start = 1):
+                            print (f'{index} = {option}')
+
+                        tail = int(input(''))
+
+                        if tail == 1:
+                            z_alpha = stats.norm.ppf(1 - alpha)
+
+                        if tail == 2:
+                            z_alpha = stats.norm.ppf(1 - alpha/2)
+
+                        while True:
+                            try:                                        
+                                run = po.Significance(mean)
+                                
+                            except TypeError as e:
+                                print (e)
 
 
+                        
+
+                        
+                        
+                        
+                        
 
 
-
-
-
-
-
-#if user selects probabilty tool 
-
+#_______________________________________________________________________________________________________________________________________
+    #probabilty options 
         if option_selection == 3:     
 
             while True:
@@ -274,6 +411,9 @@ while True:
                                     print (f'{index} = {option}')
 
                                 type_select = int(input('Data type: ')) 
+
+                                if type_select == len(set_type):
+                                    break
                                 
                                 population_value = None
                                 mean = None
@@ -282,16 +422,17 @@ while True:
                         #if discrete data is selected 
                                 if type_select == 1:
 
-                                    data = so.DataDiscrete()
+                                    data = so.DataDiscreteQ()
+                                    print (data.df)
                                     population_value = data.population
                                     frequency = data.frequency 
                                     midpoints = data.get_midpoints()
 
-                            #generating a list to alculate the mean 
+                            #generating a list to calculate the mean 
                                     sum_fx = []
                                     for i in range(len(frequency)):
                                         sum_fx.append(midpoints[i] * frequency[i])
-                                    mean = so.MeanDiscrete(sum(sum_fx), sum(frequency))
+                                    mean = so.MeanDiscrete(sum_fx,frequency)
                                     mean = float(mean)
 
 

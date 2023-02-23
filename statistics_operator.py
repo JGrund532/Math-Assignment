@@ -1,82 +1,44 @@
 import statistics
-import tools.fraction_to_float
-import function_formulas
 import math 
 from sympy import *
 import pandas as pd
 
 
+class Formulas():
 
-class Mean (object):
-    def __init__ (self, data_set):
-        self.mean = statistics.mean(data_set)
+    @staticmethod
+    def mean(data):
+        return statistics.mean(data)
     
-    def __float__ (self):
-        return float(self.mean)
+    @staticmethod
+    def range(data):
+        return max(data) - min(data)
+
+    @staticmethod
+    def median(data):
+        return statistics.median(data) 
+
+    @staticmethod 
+    def mode (data):
+        return statistics.mode(data)
+
+    @staticmethod
+    def stdevP (data):
+        return statistics.pstdev(data)
+    
+    @staticmethod
+    def stdevS (data):
+        return statistics.stdev(data)
+
+    @staticmethod
+    def varianceP (data):
+        return statistics.pvariance(data)
+    
+    @staticmethod
+    def varianceS (data):
+        return statistics.variance(data)
     
 
-class MeanDiscrete():
-    def __init__ (self, sum_fx, f):
-        self.mean = sum_fx/f
-
-    def __float__ (self):
-        return float(self.mean)
-
-
-class Range (object):
-    def __init__ (self, data_set):                     #function that is always called to initilaise the class when it is called 
-        self.range = max(data_set) - min(data_set)     #the self. makes this class '=' this function 
-
-    def __float__ (self):                              #automatically converts self.range to a float whenever 'float(range)' is called 
-        return float (self.range)
-
-
-class Median (object):
-    def __init__ (self, data_set):
-        self.median = statistics.median (data_set)
-
-    def __float__ (self):
-        return float(self.median)
-
-
-class Mode (object):
-    def __init__ (self, data_set):
-        self.mode = statistics.mode (data_set)
-
-    def __float__ (self):
-        return float(self.mode)
-
-
-class StdevP (object):
-    def __init__ (self, data_set):
-        self.stdev_p = statistics.pstdev (data_set)
-
-    def __float__ (self):
-        return float(self.stdev_p)
-
-
-class StdevS (object):
-    def __init__ (self, data_set):
-        self.stdev_s = statistics.stdev (data_set)
-
-    def __float__ (self):
-        return float(self.stdev_s)
-
-
-class VarianceP (object):
-    def __init__ (self, data_set):
-        self.variance_p = statistics.pvariance (data_set)
-
-    def __float__ (self):
-        return float(self.variance_p)
-
-
-class VarianceS (object):
-    def __init__ (self, data_set):
-        self.variance_s = statistics.variance (data_set)
-
-    def __float__ (self):
-        return float(self.variance_s)
 
 
 
@@ -84,8 +46,33 @@ class VarianceS (object):
 
 
 
+class DiscreteFormulas():
+        
+        @staticmethod
+        def stdevP (frequency, midpoints, mean):
+            variance = sum(frequency[i] * (midpoints[i] - mean)**2 for i in range(len(midpoints))) / sum(frequency)
+            stdev = math.sqrt(variance)
+            return stdev
 
-class DataDiscrete (list):
+        @staticmethod
+        def stdevS (frequency, midpoints, mean):
+            variance = sum(frequency[i] * (midpoints[i] - mean)** 2 for i in range(len(midpoints))) / (sum(frequency) - 1)
+            stdev = math.sqrt(variance)
+            return stdev
+        
+        @staticmethod
+        def mean (sum_fx, f):
+            mean = sum(sum_fx)/sum(f)
+            return mean
+
+
+
+
+#discrete data that uses words is called catagorical data, discrete data that uses number ranges is called quantitative data
+#this is needed to be imported into the discrete data function with the user being able to select which type of data they have 
+
+
+class DataDiscreteQ(list):
     def __init__ (self): 
 
         #changed to False if user selects 2 from the list below for sample/population stdev
@@ -114,9 +101,8 @@ class DataDiscrete (list):
         class2_valuelower = float (input ('Class 2 bottom value: '))
         class_jump = float(class2_valuelower - class_valuelower)
         class_range = class_valueupper - class_valuelower
-        class_mid = (class_range)/2
-        classes = []
 
+        classes = []
         print("\n")  
         for i in range(0, n): 
             print(f"{class_valuelower} - {class_valueupper} frequency: ", )
@@ -133,7 +119,6 @@ class DataDiscrete (list):
         data = {'BIN': classes, 'frequency': frequency }
         df = pd.DataFrame(data)
 
-
         self.df = df 
         self.classes = classes  
         self.frequency = frequency
@@ -144,11 +129,13 @@ class DataDiscrete (list):
         midpoints = []
         for class_interval in self.classes:
             lower, upper = map(float, class_interval.split('-'))
-
             midpoint = (lower + upper)/2
             midpoints.append(midpoint) 
-
         return midpoints 
+
+
+
+
 
 
 
@@ -176,8 +163,7 @@ class DataContinuous (list):
             if sample_type == 2:
                 self.population = False
                 type = 'sample' 
-                break
-            
+                break    
 
     #user input data set, see tools.list_maker for how it works   
         data_set = []

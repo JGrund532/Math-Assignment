@@ -1,22 +1,22 @@
-import math
+import function_operators as fo 
+import statistics_operator as so
+import probability_operators as po
+import numpy as np 
+import matplotlib.pyplot as plt 
+import scipy.stats as stats
+import math 
 
-# Define the class intervals and midpoints
-intervals = [(0, 5), (5, 10), (10, 15), (15, 20)]
-midpoints = [2.5, 7.5, 12.5, 17.5]
 
-# Define the frequency of each class
-frequencies = [3, 5, 7, 4]
 
-# Calculate the mean
-total = sum(midpoints[i] * frequencies[i] for i in range(len(midpoints)))
-mean = total / sum(frequencies)
+import numpy as np
+import matplotlib.pyplot as plt
 
-# Calculate the variance
-variance = sum(frequencies[i] * (midpoints[i] - mean) ** 2 for i in range(len(midpoints))) / sum(frequencies)
+fig, ax = plt.subplots(figsize=(3, 3))
 
-# Calculate the standard deviation
-stdev = math.sqrt(variance)
+t = np.arange(0.0, 5.0, 0.01)
+s = np.cos(2*np.pi*t)
+line, = ax.plot(t, s, lw=2)
 
-print("Mean:", mean)
-print("Variance:", variance)
-print("Standard deviation:", stdev)
+ax.annotate('local max', xy=(2, 1), xytext=(3, 1.5),
+            arrowprops=dict(facecolor='black', shrink=0.05))
+ax.set_ylim(-2, 2)

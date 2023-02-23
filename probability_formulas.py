@@ -1,11 +1,7 @@
 import math
-import matplotlib
-import fractions
 import numpy as np
-import function_formulas
 import sympy
 from sympy import *
-import scipy as stats 
 
 class formulas (object):
 
@@ -27,9 +23,18 @@ class formulas (object):
             formula = (q + p)**n
             return formula.expand()
         
+
+#statistics probability formulas 
         @staticmethod
         def z_score (x, mean, stdev):
              formula = (x - mean)/stdev 
              return formula 
 
-
+        @staticmethod 
+        def significance_level (x_bar, mu, s, n, np):
+             numerator = x_bar - mu 
+             denominator_l = s/(math.sqrt(n))
+             denominator_r = math.sqrt((np-n)/(np-1))
+             formula = numerator/(denominator_l * denominator_r)
+             return formula
+        
