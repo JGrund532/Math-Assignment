@@ -1,22 +1,26 @@
-import function_operators as fo 
-import statistics_operator as so
-import probability_operators as po
-import numpy as np 
-import matplotlib.pyplot as plt 
-import scipy.stats as stats
-import math 
+import pandas as pd
 
+# Load the data into a pandas dataframe
+df = pd.read_csv('data.csv')
 
+# Prompt the user for input
+column_names = input("Enter column names separated by commas: ").split(',')
+row_indices = input("Enter row indices separated by commas: ").split(',')
+filter_criteria = input("Enter filter criteria (optional): ")
+groupby_criteria = input("Enter groupby criteria (optional): ")
 
-import numpy as np
-import matplotlib.pyplot as plt
+# Extract the data based on user input
+if filter_criteria:
+    df = df[df.eval(filter_criteria)]
+if groupby_criteria:
+    df = df.groupby(groupby_criteria).agg('mean')
 
-fig, ax = plt.subplots(figsize=(3, 3))
+if row_indices:
+    if df.index.dtype == int:
+        row_indices = [int(i) for i in row_indices]
+    df = df.iloc[row_indices]
+if column_names:
+    df = df[column_names]
 
-t = np.arange(0.0, 5.0, 0.01)
-s = np.cos(2*np.pi*t)
-line, = ax.plot(t, s, lw=2)
-
-ax.annotate('local max', xy=(2, 1), xytext=(3, 1.5),
-            arrowprops=dict(facecolor='black', shrink=0.05))
-ax.set_ylim(-2, 2)
+# Print the resulting dataframe
+print(df)

@@ -3,7 +3,7 @@ import numpy as np
 import sympy
 from sympy import *
 
-class formulas (object):
+class Formulas (object):
 
         @staticmethod 
         def permutation_rep(x, r):
@@ -31,7 +31,7 @@ class formulas (object):
              return formula 
 
         @staticmethod 
-        def significance_level (x_bar, mu, s, n, np):
+        def significance_level (mu, x_bar, np, n, s):
              numerator = x_bar - mu 
              denominator_l = s/(math.sqrt(n))
              denominator_r = math.sqrt((np-n)/(np-1))

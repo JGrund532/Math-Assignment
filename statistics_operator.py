@@ -109,15 +109,14 @@ class DataDiscreteQ(list):
             item = (input())
             item = int(eval(item))
             frequency.append(item) 
-            classes.append (f'{class_valuelower} - {class_valueupper}')
+            classes.append (f'[{class_valuelower} - {class_valueupper}]')
             class_valuelower = class_valuelower + class_jump 
-            class_valueupper = class_valueupper + class_jump #Calculating the size of each class
-
-        print ('Data classes: ', classes)
-        print("Frequency: ", frequency)        
+            class_valueupper = class_valueupper + class_jump #Calculating the size of each class     
      
-        data = {'BIN': classes, 'frequency': frequency }
-        df = pd.DataFrame(data)
+        data = {'BIN': classes, 'frequency': frequency}
+        df = pd.DataFrame(data).transpose()
+        import string 
+        df.columns = list(string.ascii_lowercase[:len(df.columns)])
 
         self.df = df 
         self.classes = classes  

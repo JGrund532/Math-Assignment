@@ -53,16 +53,6 @@ class PlotBellZPDF ():
                     arrowprops=dict(facecolor='black', shrink=0.05))
             
 
-    #if using significance then will indicate where alpha is in the x axis compared to z
-        if z_alpha is not None and x_value > mean: 
-            self.ax.annotate ('\u03B1', xy = (z_alpha,0), xytext = ((z_alpha - 1), 0.3), 
-                            arrowprops=dict(facecolor='black', shrink=0.05))
-            
-        if z_alpha is not None and x_value < mean: 
-            self.ax.annotate ('\u03B1', xy = (z_alpha,0), xytext = ((z_alpha + 1), 0.3), 
-                            arrowprops=dict(facecolor='black', shrink=0.05))
-            
-
         self.ax.set_title(f"Normal Distribution Chart A (-{inf} - z)")
         self.ax.set_xlabel("Z Score")
         self.ax.set_ylabel("Probability Density")
@@ -105,6 +95,44 @@ class PlotBellZPDF ():
 
 
 
+    def plot_significance(self, x_value, z_alpha):
+        inf = str(math.inf)
+        total = 1
+        mu = 0
+        sigma = math.sqrt(total)
+        x = np.linspace((0 - (sigma*3.49)),(0 + (sigma*3.49)), 100) 
+        y = stats.norm.pdf(x, mu, sigma)
+        self.ax.plot(x, y, 'r-', label=f'Z = {self.z}')
+
+        # create boolean masks based on conditionals
+        mask_greater = x > z_alpha
+        mask_less = x < z_alpha
+        
+        # configure which side of the bell curve needs to be shaded
+        if x_value > z_alpha:
+            self.ax.fill_between(x[mask_greater], y[mask_greater], 0, color='red', alpha=0.3)
+            self.ax.annotate('z value', xy=(self.z, 0), xytext=((self.z - 1), 0.15), 
+                arrowprops=dict(facecolor='grey', shrink=0.05))
+            self.ax.annotate('\u03B1', xy=(z_alpha, 0), xytext=((self.z - 2.2), 0.1), 
+                arrowprops=dict(facecolor='grey', shrink=0.05))
+            self.ax.set_title(f"Critical Region (\u03B1 - z)")
+            
+        elif x_value < z_alpha:
+            self.ax.fill_between(x[mask_less], y[mask_less], 0, color='red', alpha=0.3)
+            self.ax.annotate('z score', xy=(self.z, 0), xytext=((self.z + 1), 0.3), 
+                arrowprops=dict(facecolor='black', shrink=0.05))
+            self.ax.annotate('\u03B1', xy=(z_alpha, 0), xytext=((self.z + 2), 0.3), 
+                arrowprops=dict(facecolor='black', shrink=0.05))
+            self.ax.set_title(f"Critical Region (z - \u03B1)")
+            
+        self.ax.set_xlabel("Significance")
+        self.ax.set_ylabel("Probability Density")
+        self.ax.legend(loc='upper left')
+        plt.show()
+
+
+
+
 
 
 
@@ -137,6 +165,85 @@ class Histogram():
             plt.show()
 
         
+
+
+
+
+
+
+
+class get_data():
+    def __init__ (self):
+        self.data = None
+
+    def get_continuous (self):
+        variance = None
+        stdev = None
+        data = so.DataContinuous()
+        population_value = data.population
+
+        mean = so.Formulas.mean(data.data_set)
+        _range = so.Formulas.range(data.data_set)
+        median = so.Formulas.median(data.data_set)
+        mode = so.Formulas.mode(data.data_set)
+
+        if population_value == True:
+            stdev = so.Formulas.stdevP (data.data_set)
+            variance = so.Formulas.varianceP(data.data_set)
+            label = '(P)'
+
+        elif population_value == False:
+            stdev = so.Formulas.stdevS (data.data_set)
+            variance = so.Formulas.varianceS (data.data_set)
+            label = '(S)'
+
+        return mean, _range, median, mode, stdev, variance 
+
+
+
+    def get_discrete(self):
+        discrete_options = ['Quantitative', 'Catagorical']
+
+        for index, option in enumerate (discrete_options, start = 1):
+            print (f'{index} = {option}') 
+
+        discrete_select = int(input('Discrete data type: '))
+
+        if discrete_select == 1:
+            data = so.DataDiscreteQ()
+            population_value = data.population
+            df = data.df
+            print (df)
+            population_value = data.population
+            frequency = data.frequency 
+            midpoints = data.get_midpoints()
+
+        #generating a list to calculate the mean 
+            sum_fx = []
+            for i in range(len(frequency)):
+                sum_fx.append(midpoints[i] * frequency[i])
+            mean = so.DiscreteFormulas.mean(sum_fx,frequency)
+            mean = float(mean)
+        
+        #calculating stdev using the correct formula based on whether a population or sample is being used
+            if population_value == True: 
+                stdev = so.DiscreteFormulas.stdevP(frequency, midpoints, mean)
+
+            if population_value == False:
+                stdev = so.DiscreteFormulas.stdevS(frequency, midpoints, mean)
+
+
+
+
+        def get_stats (self):
+            calculations_c = [f'Mean: {float(mean)}', f'Range: {float(_range)}', f'Median: {float(median)}', 
+                            f'Mode: {float(mode)}', f'Std deviation{label}: {float(stdev)}',
+                            f'Variance{label}: {float(variance)}']
+
+            for answers in calculations_c:
+                print(answers)
+
+
 
 
 #                           _________________________________________________________________________________________________________                        
@@ -288,7 +395,8 @@ while True:
                 if discrete_select == 1:
                     data = so.DataDiscreteQ()
                     population_value = data.population
-                    print (data.df)
+                    df = data.df
+                    print (df)
                     population_value = data.population
                     frequency = data.frequency 
                     midpoints = data.get_midpoints()
@@ -348,28 +456,7 @@ while True:
 
                 #claculating significance level and plotting a bell chart to graphically represent 
                     if sprob_select == 2:
-
-                        alpha = float(input('Significance level (\u03B1): '))
-                        tail_options = ['Single', 'Double']
-
-                        for index, option in enumerate (tail_options, start = 1):
-                            print (f'{index} = {option}')
-
-                        tail = int(input(''))
-
-                        if tail == 1:
-                            z_alpha = stats.norm.ppf(1 - alpha)
-
-                        if tail == 2:
-                            z_alpha = stats.norm.ppf(1 - alpha/2)
-
-                        while True:
-                            try:                                        
-                                run = po.Significance(mean)
-                                
-                            except TypeError as e:
-                                print (e)
-
+                        pass
 
                         
 
@@ -385,7 +472,7 @@ while True:
 
             while True:
                 try:
-                    prob_options = ['Binomial expander', 'Normal distribution', 'Back']
+                    prob_options = ['Binomial expander', 'Normal distribution', 'Significance testing', 'Back']
 
                     for index, option in enumerate (prob_options, start = 1):
                         print (f'{index} = {option}')
@@ -432,15 +519,20 @@ while True:
                                     sum_fx = []
                                     for i in range(len(frequency)):
                                         sum_fx.append(midpoints[i] * frequency[i])
-                                    mean = so.MeanDiscrete(sum_fx,frequency)
+                                    mean = so.DiscreteFormulas.mean(sum_fx,frequency)
                                     mean = float(mean)
 
+                                    if population_value == True: 
+                                        stdev = so.DiscreteFormulas.stdevP(frequency, midpoints, mean)
+
+                                    if population_value == False:
+                                        stdev = so.DiscreteFormulas.stdevS(frequency, midpoints, mean)
 
                             #plot graph after generating z score via PO module 
                                 while True:
                                     try:                                        
                                         run = po.NormalDistribution(population_value)
-                                        run.discrete(frequency, mean, midpoints)
+                                        run.discrete(frequency, mean, midpoints, stdev)
                                         z = run.z
                                         x = run.x
                                         graph = PlotBellZPDF(z)
@@ -473,6 +565,43 @@ while True:
 
                             except ValueError as e: 
                                 print (e)
+
+                        
+                    if prob_select == 3:
+                        known_data = input ('Are key data variable known? (mean, standard deviation etc.): Y/N')
+                        if known_data.upper() == 'Y':
+                            sample_def = input('Testing a sample from a batch? Y/N')
+                            if sample_def.upper() == 'Y':
+
+                                mu = float(input('Population mean: '))
+                                x_bar = float(input('Sample mean: '))
+                                pop_size = float(input('Population size: '))
+                                sample_size = float(input('Sample size: '))
+                                stdevs = float(input('Sample standard deviation: '))    
+                        
+                                run = po.Significance()
+                                z = run.get_significance()
+                                z_alpha = run.calcz_alpha()
+                                answer = run.answer(mu, x_bar, pop_size, sample_size, stdevs)
+
+                                print (run.alpha)
+                                print (run.z_alpha)
+                                print (run.answer)
+
+                                z_alpha = float(run.z_alpha)
+                                answer = float(run.answer)
+                                graph = PlotBellZPDF(answer)
+                                graph.plot_significance(answer, z_alpha)
+
+
+
+                                
+                                        
+
+
+
+
+                      
 
 
                     if prob_select > len(prob_options):
