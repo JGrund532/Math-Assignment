@@ -4,7 +4,7 @@ from sympy import *
 import pandas as pd
 
 
-class Formulas():
+class CFormulas():
 
     @staticmethod
     def mean(data):
@@ -46,24 +46,50 @@ class Formulas():
 
 
 
-class DiscreteFormulas():
+class DFormulas():
         
         @staticmethod
-        def stdevP (frequency, midpoints, mean):
-            variance = sum(frequency[i] * (midpoints[i] - mean)**2 for i in range(len(midpoints))) / sum(frequency)
+        def stdevP (variance):
+            #variance = sum(frequency[i] * (midpoints[i] - mean)**2 for i in range(len(midpoints))) / sum(frequency)
             stdev = math.sqrt(variance)
             return stdev
 
         @staticmethod
-        def stdevS (frequency, midpoints, mean):
-            variance = sum(frequency[i] * (midpoints[i] - mean)** 2 for i in range(len(midpoints))) / (sum(frequency) - 1)
+        def stdevS (variance):
+            #variance = sum(frequency[i] * (midpoints[i] - mean)** 2 for i in range(len(midpoints))) / (sum(frequency) - 1)
             stdev = math.sqrt(variance)
             return stdev
+        
+        @staticmethod
+        def varianceP (frequency, midpoints, mean):
+            variance = sum(frequency[i] * (midpoints[i] - mean)** 2 for i in range(len(midpoints))) / (sum(frequency))
+            return variance 
+        
+        @staticmethod
+        def varianceS (frequency, midpoints, mean):
+            variance = sum(frequency[i] * (midpoints[i] - mean)** 2 for i in range(len(midpoints))) / (sum(frequency))
+            return variance 
         
         @staticmethod
         def mean (sum_fx, f):
             mean = sum(sum_fx)/sum(f)
             return mean
+        
+        @staticmethod
+        def calc_range (bins):
+            upper = (bins[-1]).split('-')
+            upper = upper[-1]
+            lower = (bins[0]).split('-')
+            lower = lower[0]
+            if upper.endswith(']'):
+                upper = upper.rstrip(']')
+            if lower.startswith('['):
+                lower = lower.lstrip('[')
+            upper = float(upper)
+            lower = float(lower)
+            range = upper - lower 
+            return range 
+
 
 
 
@@ -102,31 +128,31 @@ class DataDiscreteQ(list):
         class_jump = float(class2_valuelower - class_valuelower)
         class_range = class_valueupper - class_valuelower
 
-        classes = []
+        bins = []
         print("\n")  
         for i in range(0, n): 
             print(f"{class_valuelower} - {class_valueupper} frequency: ", )
             item = (input())
             item = int(eval(item))
             frequency.append(item) 
-            classes.append (f'[{class_valuelower} - {class_valueupper}]')
+            bins.append (f'[{class_valuelower} - {class_valueupper}]')
             class_valuelower = class_valuelower + class_jump 
             class_valueupper = class_valueupper + class_jump #Calculating the size of each class     
      
-        data = {'BIN': classes, 'frequency': frequency}
+        data = {'BIN': bins, 'Frequency': frequency}
         df = pd.DataFrame(data).transpose()
         import string 
         df.columns = list(string.ascii_lowercase[:len(df.columns)])
 
         self.df = df 
-        self.classes = classes  
+        self.bins = bins  
         self.frequency = frequency
        
 
         #generating a list of the class midpoints for use in calculations 
     def get_midpoints(self):
         midpoints = []
-        for class_interval in self.classes:
+        for class_interval in self.bins:
             lower, upper = map(float, class_interval.split('-'))
             midpoint = (lower + upper)/2
             midpoints.append(midpoint) 

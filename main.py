@@ -179,41 +179,43 @@ class get_data():
     def get_continuous (self):
         variance = None
         stdev = None
+        label = None 
         data = so.DataContinuous()
         population_value = data.population
 
-        mean = so.Formulas.mean(data.data_set)
-        _range = so.Formulas.range(data.data_set)
-        median = so.Formulas.median(data.data_set)
-        mode = so.Formulas.mode(data.data_set)
+        mean = so.CFormulas.mean(data.data_set)
+        _range = so.CFormulas.range(data.data_set)
+        median = so.CFormulas.median(data.data_set)
+        mode = so.CFormulas.mode(data.data_set)
 
         if population_value == True:
-            stdev = so.Formulas.stdevP (data.data_set)
-            variance = so.Formulas.varianceP(data.data_set)
+            stdev = so.CFormulas.stdevP (data.data_set)
+            variance = so.CFormulas.varianceP(data.data_set)
             label = '(P)'
 
         elif population_value == False:
-            stdev = so.Formulas.stdevS (data.data_set)
-            variance = so.Formulas.varianceS (data.data_set)
+            stdev = so.CFormulas.stdevS (data.data_set)
+            variance = so.CFormulas.varianceS (data.data_set)
             label = '(S)'
 
-        return mean, _range, median, mode, stdev, variance 
+        self.mean = mean 
+        self._range = _range
+        self.median = median 
+        self.mode = mode
+        self.stdev = stdev
+        self.variance = variance 
+        self.label = label  
+        self.data = data
 
 
 
-    def get_discrete(self):
-        discrete_options = ['Quantitative', 'Catagorical']
-
-        for index, option in enumerate (discrete_options, start = 1):
-            print (f'{index} = {option}') 
-
-        discrete_select = int(input('Discrete data type: '))
-
-        if discrete_select == 1:
+    def get_qdiscrete(self):
+            stdev = None 
+            variance = None 
             data = so.DataDiscreteQ()
             population_value = data.population
+
             df = data.df
-            print (df)
             population_value = data.population
             frequency = data.frequency 
             midpoints = data.get_midpoints()
@@ -222,26 +224,44 @@ class get_data():
             sum_fx = []
             for i in range(len(frequency)):
                 sum_fx.append(midpoints[i] * frequency[i])
-            mean = so.DiscreteFormulas.mean(sum_fx,frequency)
+            mean = so.DFormulas.mean(sum_fx,frequency)
             mean = float(mean)
         
         #calculating stdev using the correct formula based on whether a population or sample is being used
             if population_value == True: 
-                stdev = so.DiscreteFormulas.stdevP(frequency, midpoints, mean)
+                variance = so.DFormulas.varianceP(frequency, midpoints, mean)
+                stdev = so.DFormulas.stdevP(variance)
 
             if population_value == False:
-                stdev = so.DiscreteFormulas.stdevS(frequency, midpoints, mean)
+                variance = so.DFormulas.varianceS(frequency, midpoints, mean)
+                stdev = so.DFormulas.stdevS(variance)
+
+            calc_range = so.DFormulas.calc_range(data.bins)
+            mode = df.mode() 
+
+            self.df = df 
+            self.midpoints = midpoints
+            self.bins = data.bins
+            self.frquency = frequency 
+            self.sumfx = sum_fx 
+            self.mean = mean
+            self.variance = variance 
+            self.stdev = stdev 
+            self.calc_range = calc_range 
+            self.mode = mode 
 
 
-
-
-        def get_stats (self):
-            calculations_c = [f'Mean: {float(mean)}', f'Range: {float(_range)}', f'Median: {float(median)}', 
-                            f'Mode: {float(mode)}', f'Std deviation{label}: {float(stdev)}',
-                            f'Variance{label}: {float(variance)}']
+    def get_stats (self, type = None):
+        if type is None:
+            stats = [f'Mean: {float(self.mean)}', f'Range: {float(_range)}', f'Median: {float(median)}', 
+                    f'Mode: {float(mode)}', f'Std deviation{label}: {float(stdev)}',
+                    f'Variance{label}: {float(variance)}']
 
             for answers in calculations_c:
                 print(answers)
+
+        if type is not None:
+            pass
 
 
 
@@ -523,11 +543,13 @@ while True:
                                     mean = float(mean)
 
                                     if population_value == True: 
-                                        stdev = so.DiscreteFormulas.stdevP(frequency, midpoints, mean)
+                                        variance = so.DiscreteFormulas.varianceP(frequency, midpoints, mean)
+                                        stdev = so.DiscreteFormulas.stdevP(variance)
 
                                     if population_value == False:
-                                        stdev = so.DiscreteFormulas.stdevS(frequency, midpoints, mean)
-
+                                        variance = so.DiscreteFormulas.varianceP(frequency, midpoints, mean)
+                                        stdev = so.DiscreteFormulas.stdevP(variance)
+                                        
                             #plot graph after generating z score via PO module 
                                 while True:
                                     try:                                        
