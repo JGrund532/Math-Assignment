@@ -49,14 +49,7 @@ class CFormulas():
 class DFormulas():
         
         @staticmethod
-        def stdevP (variance):
-            #variance = sum(frequency[i] * (midpoints[i] - mean)**2 for i in range(len(midpoints))) / sum(frequency)
-            stdev = math.sqrt(variance)
-            return stdev
-
-        @staticmethod
-        def stdevS (variance):
-            #variance = sum(frequency[i] * (midpoints[i] - mean)** 2 for i in range(len(midpoints))) / (sum(frequency) - 1)
+        def stdev (variance):
             stdev = math.sqrt(variance)
             return stdev
         
@@ -67,7 +60,7 @@ class DFormulas():
         
         @staticmethod
         def varianceS (frequency, midpoints, mean):
-            variance = sum(frequency[i] * (midpoints[i] - mean)** 2 for i in range(len(midpoints))) / (sum(frequency))
+            variance = sum(frequency[i] * (midpoints[i] - mean)** 2 for i in range(len(midpoints))) / (sum(frequency) - 1)
             return variance 
         
         @staticmethod
@@ -78,18 +71,48 @@ class DFormulas():
         @staticmethod
         def calc_range (bins):
             upper = (bins[-1]).split('-')
-            upper = upper[-1]
+            upper = float(upper[-1])
             lower = (bins[0]).split('-')
-            lower = lower[0]
-            if upper.endswith(']'):
-                upper = upper.rstrip(']')
-            if lower.startswith('['):
-                lower = lower.lstrip('[')
-            upper = float(upper)
-            lower = float(lower)
+            lower = float(lower[0])
             range = upper - lower 
             return range 
+        
+        @staticmethod
+        def median (frequency_list, bins_list):
+            cf = DFormulas.culmitive_f(frequency_list)
+            n = sum(frequency_list)       #n = sum culumitive freq
+            median_index = None
+            for i in range(len(cf)):     #for loop finds the median class of the data set (closest class to n/2) 
+                if cf[i] >= n/2:
+                    median_index = i
+                    break 
+                print (median_index)
+            if median_index is not None:
+                median_class = str(bins_list[median_index])
+                median_class_l = median_class.split('-')
+                l = float(median_class_l[0])                #calculating values for formula 
+                freq = frequency_list[median_index]
+                median_class_range = float(median_class_l[1]) - l
+                cff = cf[median_index]
+                median_value = float(l + (((n/2) - cff)/freq) * median_class_range)   #median in discrete return median class  
+                return median_class, median_value                                     #and the calculated value
+            if median_index is None:
+                return 'No median class found'
 
+        @staticmethod
+        def culmitive_f (frequency_list):
+            total = 0
+            cf = []
+            for f in frequency_list:
+                cf.append(total + f)
+            return cf
+        
+        @staticmethod
+        def sumfx (frequency_list, midpoints):
+            sum_fx = []
+            for i in range(len(frequency_list)):
+                sum_fx.append(midpoints[i] * frequency_list[i])
+            return sum_fx
 
 
 
@@ -135,18 +158,19 @@ class DataDiscreteQ(list):
             item = (input())
             item = int(eval(item))
             frequency.append(item) 
-            bins.append (f'[{class_valuelower} - {class_valueupper}]')
+            bins.append (f'{class_valuelower} - {class_valueupper}')
             class_valuelower = class_valuelower + class_jump 
             class_valueupper = class_valueupper + class_jump #Calculating the size of each class     
      
         data = {'BIN': bins, 'Frequency': frequency}
         df = pd.DataFrame(data).transpose()
         import string 
-        df.columns = list(string.ascii_lowercase[:len(df.columns)])
+        df.columns = list(string.ascii_lowercase[:len(df.columns)]) #switches column naming to letters not numbers 
 
         self.df = df 
         self.bins = bins  
         self.frequency = frequency
+        self.class_range = class_range
        
 
         #generating a list of the class midpoints for use in calculations 
